@@ -7,4 +7,23 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <!-- Aggiungi un link per invocare l'azione del controller -->
+    <form method="get" asp-controller="Test" asp-action="Index">
+        <button type="submit" class="btn btn-primary">Check Amministratori</button>
+    </form>
+
+    @if (ViewBag.HasRecords != null)
+    {
+        <p>
+            @if (ViewBag.HasRecords)
+            {
+                <span>Ci sono record nella tabella Amministratori.</span>
+            }
+            else
+            {
+                <span>Non ci sono record nella tabella Amministratori.</span>
+            }
+        </p>
+    }
 </div>

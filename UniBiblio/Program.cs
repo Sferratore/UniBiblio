@@ -1,7 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using UniBiblio.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+// Aggiungi DBContext. Dependency Injection
+builder.Services.AddDbContext<unibiblioContext>(options =>
+    options.UseMySql("Server=localhost;Database=unibiblio;User=root;Password=DB09Gennaio;", new MySqlServerVersion(new Version(8, 0, 31))));
 
 var app = builder.Build();
 
@@ -17,6 +23,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.UseAuthorization();
 
