@@ -40,3 +40,4 @@ C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\MySqlConnector.dll
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\UniBiblio.csproj.CopyComplete
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\BCrypt.Net-Next.dll

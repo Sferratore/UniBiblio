@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "HdPzLptJ85W+MeogvG9AqohWin2Guyy3515WS+e1eh78dt3JR8vwCNhFFvm/FGiufyxzZcL+d0cHo0HuCsKkNA==",
+  "dgSpecHash": "h7+LRPH53tfk04ldMCIlSVNbWQQRf2xz+yf+cMPeI+npaAxXMHjzeUjFghfRdJiu0gq6JTiknnS5E9MXEUbEug==",
   "success": true,
   "projectFilePath": "C:\\Users\\F.P.S\\Desktop\\UniBiblio\\UniBiblio\\UniBiblio.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\F.P.S\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\F.P.S\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\F.P.S\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.33\\microsoft.entityframeworkcore.6.0.33.nupkg.sha512",
     "C:\\Users\\F.P.S\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.33\\microsoft.entityframeworkcore.abstractions.6.0.33.nupkg.sha512",
