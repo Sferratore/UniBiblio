@@ -13,14 +13,14 @@ namespace UniBiblio.Controllers
             _context = context;
         }
 
-        // GET: /Account/Login
+
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-        // POST: /Account/Login
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -35,7 +35,7 @@ namespace UniBiblio.Controllers
             if (utente != null && BCrypt.Net.BCrypt.Verify(model.Password, utente.PasswordHash))
             {
                 // Logica per l'utente loggato
-                return RedirectToAction("UserDashboard", "Home");
+                return RedirectToAction("Home", "UserDashboard");
             }
             else
             {
@@ -61,14 +61,14 @@ namespace UniBiblio.Controllers
 
         }
 
-        // GET: /Account/Register
+
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        // POST: /Account/Register
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {

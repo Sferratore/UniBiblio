@@ -1,0 +1,56 @@
+﻿<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - UniBiblio</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/UniBiblio.styles.css" asp-append-version="true" />
+</head>
+
+<div class="jumbotron text-center">
+    <h1 class="display-4">Benvenuti su UniBiblio</h1>
+    <p class="lead">Il tuo portale per prenotare libri e sale studio nel complesso delle nostre biblioteche.</p>
+    <hr class="my-4">
+    <p>Utilizza i pulsanti qui sotto per iniziare.</p>
+    <div class="mt-4">
+        <a href="/Books/Reserve" class="btn btn-primary btn-lg mx-2" role="button">Prenota un Libro</a>
+        <a href="/StudyRooms/Reserve" class="btn btn-success btn-lg mx-2" role="button">Prenota una Sala Studio</a>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .jumbotron {
+            background-color: #ffffff;
+            padding: 2rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+                border-color: #004085;
+            }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+            .btn-success:hover {
+                background-color: #218838;
+                border-color: #1e7e34;
+            }
+    </style>
+}
