@@ -3,6 +3,14 @@ using UniBiblio.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Aggiungi Razor Pages e modifica i percorsi di ricerca delle view
+builder.Services.AddControllersWithViews()
+    .AddRazorOptions(options =>
+    {
+        // Aggiungi la cartella Pages ai percorsi di ricerca delle view
+        options.PageViewLocationFormats.Add("/Pages/{0}.cshtml");
+    });
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 // Aggiungi DBContext. Dependency Injection

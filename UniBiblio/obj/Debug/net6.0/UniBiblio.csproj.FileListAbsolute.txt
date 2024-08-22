@@ -21,7 +21,6 @@ C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\staticwebassets\msbu
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\staticwebassets.pack.json
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\staticwebassets.development.json
-C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\scopedcss\bundle\UniBiblio.styles.css
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\scopedcss\projectbundle\UniBiblio.bundle.scp.css
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\UniBiblio.dll
@@ -41,3 +40,4 @@ C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\Pomelo.EntityFramewo
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\UniBiblio.csproj.CopyComplete
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css

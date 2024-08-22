@@ -30,27 +30,35 @@ namespace UniBiblio.Controllers
             }
 
             // Verifica dell'utente
-            var utente = await _context.Utentis
-                .FirstOrDefaultAsync(u => u.Email == model.Email && u.PasswordHash == BCrypt.Net.BCrypt.HashPassword(model.Password));
+            var utente = await _context.Utentis.FirstOrDefaultAsync(u => u.Email == model.Email);
 
-            if (utente == null)
+            if (utente != null && BCrypt.Net.BCrypt.Verify(model.Password, utente.PasswordHash))
             {
-                // Se non è un utente, controlla se è un amministratore
-                var amministratore = await _context.Amministratoris
-                    .FirstOrDefaultAsync(a => a.Email == model.Email && a.PasswordHash == BCrypt.Net.BCrypt.HashPassword(model.Password));
-
-                if (amministratore == null)
+                // Logica per l'utente loggato
+                return RedirectToAction("UserDashboard", "Home");
+            }
+            else
+            {
+                if (utente == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Credenziali non valide.");
-                    return View(model);
-                }
+                    // Se non è un utente, controlla se è un amministratore
+                    var amministratore = await _context.Amministratoris
+                        .FirstOrDefaultAsync(a => a.Email == model.Email);
 
-                // Logica per l'amministratore loggato
-                return RedirectToAction("AdminDashboard", "Home");
+                    if (amministratore != null && BCrypt.Net.BCrypt.Verify(model.Password, amministratore.PasswordHash))
+                    {
+                        // Logica per l'amministratore loggato
+                        return RedirectToAction("AdminDashboard", "Home");
+                    }
+
+
+                }
             }
 
-            // Logica per l'utente loggato
-            return RedirectToAction("UserDashboard", "Home");
+            //Logica per i login falliti
+            ModelState.AddModelError(string.Empty, "Credenziali non valide.");
+            return View(model);
+
         }
 
         // GET: /Account/Register
