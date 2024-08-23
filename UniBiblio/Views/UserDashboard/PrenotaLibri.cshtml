@@ -1,0 +1,52 @@
+﻿@model IEnumerable<UniBiblio.Models.Libri>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - UniBiblio</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/UniBiblio.styles.css" asp-append-version="true" />
+</head>
+
+<h2>Prenotazione Libro</h2>
+
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Autore</th>
+                <th>Anno Pubblicazione</th>
+                <th>ISBN</th>
+                <th>Biblioteca</th>
+                <th>Quantità Disponibile</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var libro in Model)
+            {
+                <tr>
+                    <td>@libro.Titolo</td>
+                    <td>@libro.Autore</td>
+                    <td>@libro.AnnoPubblicazione</td>
+                    <td>@libro.Isbn</td>
+                    <td>@libro.IdBiblioteca</td>
+                    <td>@libro.QuantitaDisponibile</td>
+                    <td>
+                        <form asp-action="Reserve" method="post">
+                            <input type="hidden" name="id_libro" value="@libro.IdLibro" />
+                            <button type="submit" class="btn btn-primary">Prenota</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nessun libro disponibile al momento.</p>
+}
