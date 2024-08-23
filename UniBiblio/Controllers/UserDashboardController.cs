@@ -27,9 +27,9 @@ namespace UniBiblio.Controllers
         [HttpGet]
         public async Task<IActionResult> PrenotaLibri()
         {
-            var libri = await _context.Libris
+            var libri = await _context.Prenotalibriviews
                 .Where(l => l.QuantitaDisponibile > 0)
-                .Select(l => new Libri
+                .Select(l => new Prenotalibriview
                 {
                     IdLibro = l.IdLibro,
                     Titolo = l.Titolo,
@@ -37,6 +37,7 @@ namespace UniBiblio.Controllers
                     AnnoPubblicazione = l.AnnoPubblicazione,
                     Isbn = l.Isbn,
                     Categoria = l.Categoria,
+                    Biblioteca = l.Biblioteca,
                     QuantitaDisponibile = (int)l.QuantitaDisponibile
                 })
                 .ToListAsync();

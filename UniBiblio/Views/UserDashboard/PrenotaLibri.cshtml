@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UniBiblio.Models.Libri>
+﻿@model IEnumerable<UniBiblio.Models.Prenotalibriview>
 @{
     Layout = "../Shared/_Layout";
 }
@@ -28,7 +28,7 @@
                     <td>@libro.Autore</td>
                     <td>@libro.AnnoPubblicazione</td>
                     <td>@libro.Isbn</td>
-                    <td>@libro.IdBiblioteca</td>
+                    <td>@libro.Biblioteca</td>
                     <td>@libro.QuantitaDisponibile</td>
                     <td>
                         <form asp-action="Reserve" method="post">

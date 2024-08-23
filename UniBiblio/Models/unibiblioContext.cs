@@ -21,6 +21,7 @@ namespace UniBiblio.Models
         public virtual DbSet<Categorie> Categories { get; set; } = null!;
         public virtual DbSet<Libri> Libris { get; set; } = null!;
         public virtual DbSet<LibriCategorie> LibriCategories { get; set; } = null!;
+        public virtual DbSet<Prenotalibriview> Prenotalibriviews { get; set; } = null!;
         public virtual DbSet<PrenotazioniLibri> PrenotazioniLibris { get; set; } = null!;
         public virtual DbSet<PrenotazioniSale> PrenotazioniSales { get; set; } = null!;
         public virtual DbSet<Ruoli> Ruolis { get; set; } = null!;
@@ -175,6 +176,41 @@ namespace UniBiblio.Models
                 entity.Property(e => e.IdLibro).HasColumnName("id_libro");
 
                 entity.Property(e => e.IdCategoria).HasColumnName("id_categoria");
+            });
+
+            modelBuilder.Entity<Prenotalibriview>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("prenotalibriview");
+
+                entity.Property(e => e.AnnoPubblicazione).HasColumnName("anno_pubblicazione");
+
+                entity.Property(e => e.Autore)
+                    .HasMaxLength(255)
+                    .HasColumnName("autore");
+
+                entity.Property(e => e.Biblioteca)
+                    .HasMaxLength(100)
+                    .HasColumnName("biblioteca");
+
+                entity.Property(e => e.Categoria)
+                    .HasMaxLength(100)
+                    .HasColumnName("categoria");
+
+                entity.Property(e => e.IdLibro).HasColumnName("id_libro");
+
+                entity.Property(e => e.Isbn)
+                    .HasMaxLength(13)
+                    .HasColumnName("isbn");
+
+                entity.Property(e => e.QuantitaDisponibile)
+                    .HasColumnName("quantita_disponibile")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.Titolo)
+                    .HasMaxLength(255)
+                    .HasColumnName("titolo");
             });
 
             modelBuilder.Entity<PrenotazioniLibri>(entity =>
