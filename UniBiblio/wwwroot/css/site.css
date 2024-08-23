@@ -129,3 +129,21 @@ footer {
     bottom: 0;
     font-size: 0.875rem;
 }
+
+
+.jumbotron {
+    background-color: #ffffff;
+    padding: 2rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }

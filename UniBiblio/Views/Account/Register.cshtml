@@ -1,12 +1,8 @@
 ﻿@model UniBiblio.Models.RegisterViewModel
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - UniBiblio</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/UniBiblio.styles.css" asp-append-version="true" />
-</head>
+@{
+    Layout = "../Shared/_Layout";
+}
+
 <h2>Registrazione</h2>
 <form asp-action="Register" method="POST">
     <div class="form-group">

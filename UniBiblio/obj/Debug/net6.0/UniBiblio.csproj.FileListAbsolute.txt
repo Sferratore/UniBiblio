@@ -41,3 +41,4 @@ C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\System.Diagnostics.D
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\UniBiblio.csproj.CopyComplete
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\BCrypt.Net-Next.dll
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
