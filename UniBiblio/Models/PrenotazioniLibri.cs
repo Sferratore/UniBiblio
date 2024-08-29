@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace UniBiblio.Models
+﻿namespace UniBiblio.Models
 {
     public partial class PrenotazioniLibri
     {

@@ -31,8 +31,8 @@
                     <td>@libro.Biblioteca</td>
                     <td>@libro.QuantitaDisponibile</td>
                     <td>
-                        <form asp-action="Reserve" method="post">
-                            <input type="hidden" name="id_libro" value="@libro.IdLibro" />
+                        <form asp-action="EffettuaPrenotazione" method="post">
+                            <input type="hidden" id="id_libro" name="id_libro" value="@libro.IdLibro" />
                             <button type="submit" class="btn btn-primary">Prenota</button>
                         </form>
                     </td>

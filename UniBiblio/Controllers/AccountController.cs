@@ -35,6 +35,7 @@ namespace UniBiblio.Controllers
             if (utente != null && BCrypt.Net.BCrypt.Verify(model.Password, utente.PasswordHash))
             {
                 // Logica per l'utente loggato
+                HttpContext.Session.SetString("UserEmail", utente.Email);
                 return RedirectToAction("Home", "UserDashboard");
             }
             else
@@ -48,6 +49,7 @@ namespace UniBiblio.Controllers
                     if (amministratore != null && BCrypt.Net.BCrypt.Verify(model.Password, amministratore.PasswordHash))
                     {
                         // Logica per l'amministratore loggato
+                        HttpContext.Session.SetString("UserEmail", amministratore.Email);
                         return RedirectToAction("AdminDashboard", "Home");
                     }
 

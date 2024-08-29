@@ -11,6 +11,15 @@ builder.Services.AddControllersWithViews()
         options.PageViewLocationFormats.Add("/Pages/{0}.cshtml");
     });
 
+// Aggiungi i servizi delle sessioni
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Timeout della sessione
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 // Aggiungi DBContext. Dependency Injection
@@ -29,6 +38,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+// Configura le sessioni
+app.UseSession();
 
 app.UseRouting();
 
