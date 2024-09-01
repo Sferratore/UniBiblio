@@ -9,6 +9,7 @@ namespace UniBiblio.Models
         public int? IdUtente { get; set; }
         public int? IdSala { get; set; }
         public DateOnly DataPrenotazione { get; set; }
+        public DateOnly GiornoPrenotato { get; set; }
         public TimeOnly OraInizio { get; set; }
         public TimeOnly OraFine { get; set; }
         public string Stato { get; set; } = null!;

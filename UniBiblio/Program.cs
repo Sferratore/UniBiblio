@@ -11,6 +11,9 @@ builder.Services.AddControllersWithViews()
         options.PageViewLocationFormats.Add("/Pages/{0}.cshtml");
     });
 
+// Aggiungi supporto per la configurazione
+builder.Configuration.AddJsonFile("appsettings.json");
+
 // Aggiungi i servizi delle sessioni
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -24,7 +27,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddRazorPages();
 // Aggiungi DBContext. Dependency Injection
 builder.Services.AddDbContext<UniBiblioContext>(options =>
-    options.UseMySql("Server=localhost;Database=UniBiblio;User=root;Password=DB09Gennaio;", new MySqlServerVersion(new Version(8, 0, 31))));
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 31))));
 
 var app = builder.Build();
 

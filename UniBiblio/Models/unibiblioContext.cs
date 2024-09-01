@@ -22,7 +22,6 @@ namespace UniBiblio.Models
         public virtual DbSet<Libri> Libris { get; set; } = null!;
         public virtual DbSet<LibriCategorie> LibriCategories { get; set; } = null!;
         public virtual DbSet<Prenotalibriview> Prenotalibriviews { get; set; } = null!;
-        public virtual DbSet<Prenotasaleview> Prenotasaleviews { get; set; } = null!;
         public virtual DbSet<PrenotazioniLibri> PrenotazioniLibris { get; set; } = null!;
         public virtual DbSet<PrenotazioniSale> PrenotazioniSales { get; set; } = null!;
         public virtual DbSet<Prenotazionieffettuatelibriview> Prenotazionieffettuatelibriviews { get; set; } = null!;
@@ -216,35 +215,6 @@ namespace UniBiblio.Models
                     .HasColumnName("titolo");
             });
 
-            modelBuilder.Entity<Prenotasaleview>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("prenotasaleview");
-
-                entity.Property(e => e.Biblioteca)
-                    .HasMaxLength(100)
-                    .HasColumnName("biblioteca");
-
-                entity.Property(e => e.Capienza).HasColumnName("capienza");
-
-                entity.Property(e => e.Disponibilita)
-                    .HasColumnName("disponibilita")
-                    .HasDefaultValueSql("'1'");
-
-                entity.Property(e => e.IdSala).HasColumnName("id_sala");
-
-                entity.Property(e => e.IndirizzoBiblioteca)
-                    .HasMaxLength(255)
-                    .HasColumnName("indirizzo_biblioteca");
-
-                entity.Property(e => e.NomeSala)
-                    .HasMaxLength(100)
-                    .HasColumnName("nome_sala");
-
-                entity.Property(e => e.PostiDisponibili).HasColumnName("posti_disponibili");
-            });
-
             modelBuilder.Entity<PrenotazioniLibri>(entity =>
             {
                 entity.HasKey(e => e.IdPrenotazione)
@@ -285,6 +255,8 @@ namespace UniBiblio.Models
                 entity.Property(e => e.IdPrenotazione).HasColumnName("id_prenotazione");
 
                 entity.Property(e => e.DataPrenotazione).HasColumnName("data_prenotazione");
+
+                entity.Property(e => e.GiornoPrenotato).HasColumnName("giorno_prenotato");
 
                 entity.Property(e => e.IdSala).HasColumnName("id_sala");
 
@@ -351,6 +323,8 @@ namespace UniBiblio.Models
                 entity.Property(e => e.EmailUtente)
                     .HasMaxLength(150)
                     .HasColumnName("email_utente");
+
+                entity.Property(e => e.GiornoPrenotato).HasColumnName("giorno_prenotato");
 
                 entity.Property(e => e.IdPrenotazione).HasColumnName("id_prenotazione");
 

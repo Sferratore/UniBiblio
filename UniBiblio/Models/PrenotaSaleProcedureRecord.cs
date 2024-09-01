@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace UniBiblio.Models
+﻿namespace UniBiblio.Models
 {
-    public partial class Prenotasaleview
+    public partial class PrenotaSaleProcedureRecord
     {
         public ulong IdSala { get; set; }
         public string NomeSala { get; set; } = null!;

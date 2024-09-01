@@ -25,7 +25,8 @@ FROM Prenotazioni_Libri PL
 INNER JOIN Utenti U ON (PL.id_utente = U.id_utente) 
 INNER JOIN Libri L ON (PL.id_libro = L.id_libro);
 
-CREATE VIEW PrenotaSaleView AS
+
+/*CREATE VIEW PrenotaSaleView AS
 SELECT
     SS.id_sala,
     SS.nome_sala,
@@ -48,7 +49,7 @@ LEFT JOIN (
         stato = 'Confermato'
     GROUP BY
         id_sala
-) PS ON SS.id_sala = PS.id_sala;
+) PS ON SS.id_sala = PS.id_sala;*/
 
 CREATE VIEW PrenotazioniEffettuateSaleView AS
 SELECT

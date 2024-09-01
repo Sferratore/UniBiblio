@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 using UniBiblio.Models;
 
 namespace UniBiblio.Controllers
@@ -8,10 +10,12 @@ namespace UniBiblio.Controllers
     {
 
         private readonly UniBiblioContext _context;
+        private readonly string _connectionString;
 
-        public UserDashboardController(UniBiblioContext context)
+        public UserDashboardController(UniBiblioContext context, IConfiguration configuration)
         {
             _context = context;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public IActionResult Index()
@@ -108,22 +112,28 @@ namespace UniBiblio.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PrenotaSale()
+        public async Task<IActionResult> PrenotaSale(DateTime date)
         {
-            var sale = await _context.Prenotasaleviews
-                .Where(l => l.PostiDisponibili > 0 && l.Disponibilita == true)
-                .Select(l => new Prenotasaleview
+            try
+            {
+                //Qui usiamo Dapper perché EFC non ci permette di ottenere risultati dal DB se non si tratta di tabelle o view che comunicano col dbcontext
+                using (var connection = new MySqlConnection(_connectionString))
                 {
-                    IdSala = l.IdSala,
-                    NomeSala = l.NomeSala,
-                    Biblioteca = l.Biblioteca,
-                    Capienza = l.Capienza,
-                    PostiDisponibili = l.PostiDisponibili,
-                    IndirizzoBiblioteca = l.IndirizzoBiblioteca
-                })
-                .ToListAsync();
+                    connection.Open();
+                    var sale = await connection.QueryAsync<PrenotaSaleProcedureRecord>(
+                        "CALL GetAvailableSeatsByDate(@Date)",
+                        new { Date = date }
+                    );
+                    return View(sale);
+                }
 
-            return View(sale);
+            }
+            catch (Exception ex)
+            {
+                return Content("Errore nell'esecuzione della procedura per ottenere i posti disponibili!");
+            }
+
+
         }
 
 

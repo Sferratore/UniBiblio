@@ -9,7 +9,53 @@
     <p>Utilizza i pulsanti qui sotto per iniziare.</p>
     <div class="mt-4">
         <a href="@Url.Action("PrenotaLibri", "UserDashboard")" class="btn btn-primary btn-lg mx-2" role="button">Prenota un Libro</a>
-        <a href="@Url.Action("PrenotaSale", "UserDashboard")" class="btn btn-success btn-lg mx-2" role="button">Prenota una Sala Studio</a>
+        <!-- Pulsante per aprire la modal di selezione della data -->
+        <a href="#" class="btn btn-success btn-lg mx-2" role="button" data-toggle="modal" data-target="#dateModal">Prenota una Sala Studio</a>
     </div>
 </div>
 
+<!-- Modal per la selezione della data -->
+<div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="dateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dateModalLabel">Seleziona la Data per la Prenotazione</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="dateForm">
+                    <div class="form-group">
+                        <label for="reservationDate">Data di prenotazione:</label>
+                        <input type="date" class="form-control" id="reservationDate" name="reservationDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Conferma</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Imposta il valore minimo del picker di data alla data attuale
+            var today = new Date().toISOString().split('T')[0];
+            $('#reservationDate').attr('min', today);
+
+            $('#dateForm').submit(function (event) {
+                event.preventDefault(); // Previene il submit normale del form
+                var selectedDate = $('#reservationDate').val(); // Prende la data dal picker
+                if (new Date(selectedDate) >= new Date(today)) {
+                    window.location.href = '@Url.Action("PrenotaSale", "UserDashboard")' + '?date=' + selectedDate; // Reindirizza al controller con la data come query string
+                } else {
+                    alert('Per favore, seleziona una data valida.');
+                }
+            });
+        });
+    </script>
+}
