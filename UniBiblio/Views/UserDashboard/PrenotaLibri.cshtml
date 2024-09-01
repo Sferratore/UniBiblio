@@ -6,16 +6,6 @@
 
 <h2>Prenotazione Libro</h2>
 
-@if (TempData["Message"] != null)
-{
-    <p class="alert alert-success">@TempData["Message"]</p>
-}
-
-@if (TempData["ErrorMessage"] != null)
-{
-    <p class="alert alert-danger">@TempData["ErrorMessage"]</p>
-}
-
 @if (Model.Any())
 {
     <table class="table table-striped">

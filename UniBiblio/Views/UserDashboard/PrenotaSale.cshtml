@@ -3,17 +3,7 @@
     Layout = "../Shared/_Layout";
 }
 
-<h2>Prenotazione Sala Studio</h2>
-
-@if (TempData["Message"] != null)
-{
-    <p class="alert alert-success">@TempData["Message"]</p>
-}
-
-@if (TempData["ErrorMessage"] != null)
-{
-    <p class="alert alert-danger">@TempData["ErrorMessage"]</p>
-}
+<h2>Prenotazione Sala Studio in data @TempData["DatePick"]</h2>
 
 @if (Model.Any())
 {
@@ -40,6 +30,7 @@
                     <td>
                         <form asp-action="PrenotaSale" method="POST" onsubmit="return confirmPrenotazione()">
                             <input type="hidden" name="id_sala" value="@sala.IdSala" />
+                            <input type="hidden" name="date_pick" value="@TempData["DatePick"]" />
                             <button type="submit" class="btn btn-primary">Prenota</button>
                         </form>
                     </td>

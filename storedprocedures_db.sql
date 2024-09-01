@@ -21,11 +21,12 @@ BEGIN
         FROM
             Prenotazioni_Sale
         WHERE
-            stato = 'Confermato' AND DATE(data_prenotazione) = ReservationDate
+            stato = 'Prenotato' AND DATE(giorno_prenotato) = ReservationDate
         GROUP BY
             id_sala
     ) PS ON SS.id_sala = PS.id_sala
-    WHERE Disponibilita = 1;
+    WHERE Disponibilita = 1
+    HAVING PostiDisponibili > 0;
 END //
 
 DELIMITER ;

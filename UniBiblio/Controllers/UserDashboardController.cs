@@ -76,7 +76,7 @@ namespace UniBiblio.Controllers
             if (prenotazioniNonRitirate >= 3)
             {
                 TempData["ErrorMessage"] = "Hai già 3 prenotazioni non ritirate. Non puoi effettuare ulteriori prenotazioni.";
-                return RedirectToAction("PrenotaLibri", "UserDashboard");
+                return RedirectToAction("Home", "UserDashboard");
             }
 
             // Recupera il libro
@@ -84,7 +84,7 @@ namespace UniBiblio.Controllers
             if (libro == null || libro.QuantitaDisponibile <= 0)
             {
                 TempData["ErrorMessage"] = "Il libro selezionato non è disponibile.";
-                return RedirectToAction("PrenotaLibri", "UserDashboard");
+                return RedirectToAction("Home", "UserDashboard");
             }
 
             // Crea una nuova prenotazione
@@ -107,7 +107,7 @@ namespace UniBiblio.Controllers
 
             // Redirige a una pagina di conferma o alla lista delle prenotazioni
             TempData["Message"] = "Prenotazione EFFETTUATA correttamente!";
-            return RedirectToAction("PrenotaLibri", "UserDashboard");
+            return RedirectToAction("Home", "UserDashboard");
 
         }
 
@@ -124,6 +124,8 @@ namespace UniBiblio.Controllers
                         "CALL GetAvailableSeatsByDate(@Date)",
                         new { Date = date }
                     );
+
+                    TempData["DatePick"] = date.ToString();
                     return View(sale);
                 }
 
@@ -138,67 +140,67 @@ namespace UniBiblio.Controllers
 
 
 
-        //[HttpPost]
-        //public async Task<IActionResult> PrenotaSale(int id_sala)
-        //{
-        //    // Recupera l'email dell'utente dalla sessione
-        //    var userEmail = HttpContext.Session.GetString("UserEmail");
+        [HttpPost]
+        public async Task<IActionResult> PrenotaSale(int id_sala, DateTime date_pick)
+        {
+            // Recupera l'email dell'utente dalla sessione
+            var userEmail = HttpContext.Session.GetString("UserEmail");
 
-        //    if (string.IsNullOrEmpty(userEmail))
-        //    {
-        //        TempData["ErrorMessage"] = "È necessario effettuare il login per prenotare una sala.";
-        //        return RedirectToAction("Login", "Account");
-        //    }
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                TempData["ErrorMessage"] = "È necessario effettuare il login per prenotare una sala.";
+                return RedirectToAction("Login", "Account");
+            }
 
-        //    // Recupera l'utente dal database
-        //    var utente = await _context.Utentis.FirstOrDefaultAsync(u => u.Email == userEmail);
-        //    if (utente == null)
-        //    {
-        //        TempData["ErrorMessage"] = "L'utente in sessione non corrisponde a nessun utente nel DB. Contatta un amministratore.";
-        //        return RedirectToAction("Login", "Account");
-        //    }
+            // Recupera l'utente dal database
+            var utente = await _context.Utentis.FirstOrDefaultAsync(u => u.Email == userEmail);
+            if (utente == null)
+            {
+                TempData["ErrorMessage"] = "L'utente in sessione non corrisponde a nessun utente nel DB. Contatta un amministratore.";
+                return RedirectToAction("Login", "Account");
+            }
 
-        //    // Controlla il numero di prenotazioni non ritirate
-        //    int prenotazioniNonRitirate = await _context.Prenotazionieffettuatelibriviews
-        //        .CountAsync(p => p.IdUtente == (int)utente.IdUtente && p.DataRitiro == null);
+            // Controlla il numero di prenotazioni non scadute
+            int prenotazioniNonScadute = await _context.Prenotazionieffettuatesaleviews
+                .CountAsync(p => p.IdUtente == (int)utente.IdUtente && p.GiornoPrenotato >= DateOnly.FromDateTime(DateTime.Now));
 
-        //    if (prenotazioniNonRitirate >= 3)
-        //    {
-        //        TempData["ErrorMessage"] = "Hai già 3 prenotazioni non ritirate. Non puoi effettuare ulteriori prenotazioni.";
-        //        return RedirectToAction("PrenotaLibri", "UserDashboard");
-        //    }
+            if (prenotazioniNonScadute >= 1)
+            {
+                TempData["ErrorMessage"] = "Hai già 1 prenotazione attiva. Non puoi effettuare ulteriori prenotazioni.";
+                return RedirectToAction("Home", "UserDashboard");
+            }
 
-        //    // Recupera il libro
-        //    var libro = await _context.Libris.FirstOrDefaultAsync(l => (int)l.IdLibro == id_libro);
-        //    if (libro == null || libro.QuantitaDisponibile <= 0)
-        //    {
-        //        TempData["ErrorMessage"] = "Il libro selezionato non è disponibile.";
-        //        return RedirectToAction("PrenotaLibri", "UserDashboard");
-        //    }
+            // Recupera la sala
+            var sala = await _context.SaleStudios.FirstOrDefaultAsync(l => (int)l.IdSala == id_sala);
+            if (sala == null)
+            {
+                TempData["ErrorMessage"] = "La sala selezionata non è disponibile.";
+                return RedirectToAction("Home", "UserDashboard");
+            }
 
-        //    // Crea una nuova prenotazione
-        //    var nuovaPrenotazione = new PrenotazioniLibri
-        //    {
-        //        IdUtente = (int)utente.IdUtente,
-        //        IdLibro = (int)libro.IdLibro,
-        //        DataPrenotazione = DateOnly.FromDateTime(DateTime.Now),
-        //        Stato = "Prenotato"
-        //    };
+            // Crea una nuova prenotazione
+            var nuovaPrenotazione = new PrenotazioniSale
+            {
+                IdUtente = (int)utente.IdUtente,
+                IdSala = (int)sala.IdSala,
+                DataPrenotazione = DateOnly.FromDateTime(DateTime.Now),
+                GiornoPrenotato = DateOnly.FromDateTime(date_pick),
+                OraInizio = TimeOnly.Parse("7:00"),
+                OraFine = TimeOnly.Parse("20:00"),
+                Stato = "Prenotato"
+            };
 
-        //    // Aggiungi la prenotazione al database
-        //    _context.PrenotazioniLibris.Add(nuovaPrenotazione);
+            // Aggiungi la prenotazione al database
+            _context.PrenotazioniSales.Add(nuovaPrenotazione);
 
-        //    // Riduci la quantità disponibile del libro
-        //    libro.QuantitaDisponibile--;
+            // Salva le modifiche
+            await _context.SaveChangesAsync();
 
-        //    // Salva le modifiche
-        //    await _context.SaveChangesAsync();
+            // Redirige a una pagina di conferma o alla lista delle prenotazioni
+            TempData["Message"] = "Prenotazione EFFETTUATA correttamente!";
+            return RedirectToAction("Home", "UserDashboard");
 
-        //    // Redirige a una pagina di conferma o alla lista delle prenotazioni
-        //    TempData["Message"] = "Prenotazione EFFETTUATA correttamente!";
-        //    return RedirectToAction("PrenotaLibri", "UserDashboard");
-
-        //}
+        }
     }
 
 

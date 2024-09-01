@@ -2,6 +2,17 @@
     Layout = "../Shared/_Layout";
 }
 
+@if (TempData["Message"] != null)
+{
+    <p class="alert alert-success">@TempData["Message"]</p>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <p class="alert alert-danger">@TempData["ErrorMessage"]</p>
+}
+
+
 <div class="jumbotron text-center">
     <h1 class="display-4">Benvenuti su UniBiblio</h1>
     <p class="lead">Il tuo portale per prenotare libri e sale studio nel complesso delle nostre biblioteche.</p>
