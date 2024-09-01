@@ -6,6 +6,16 @@
 
 <h2>Prenotazione Libro</h2>
 
+@if (TempData["Message"] != null)
+{
+    <p class="alert alert-success">@TempData["Message"]</p>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <p class="alert alert-danger">@TempData["Message"]</p>
+}
+
 @if (Model.Any())
 {
     <table class="table table-striped">
@@ -31,7 +41,7 @@
                     <td>@libro.Biblioteca</td>
                     <td>@libro.QuantitaDisponibile</td>
                     <td>
-                        <form asp-action="EffettuaPrenotazione" method="post">
+                        <form asp-action="PrenotaLibri" method="POST">
                             <input type="hidden" id="id_libro" name="id_libro" value="@libro.IdLibro" />
                             <button type="submit" class="btn btn-primary">Prenota</button>
                         </form>

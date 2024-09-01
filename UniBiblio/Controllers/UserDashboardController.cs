@@ -45,15 +45,15 @@ namespace UniBiblio.Controllers
             return View(libri);
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> EffettuaPrenotazione(int id_libro)
+        public async Task<IActionResult> PrenotaLibri(int id_libro)
         {
             // Recupera l'email dell'utente dalla sessione
             var userEmail = HttpContext.Session.GetString("UserEmail");
 
             if (string.IsNullOrEmpty(userEmail))
             {
+                TempData["ErrorMessage"] = "È necessario effettuare il login per prenotare un libro.";
                 return RedirectToAction("Login", "Account");
             }
 
@@ -61,6 +61,7 @@ namespace UniBiblio.Controllers
             var utente = await _context.Utentis.FirstOrDefaultAsync(u => u.Email == userEmail);
             if (utente == null)
             {
+                TempData["ErrorMessage"] = "L'utente in sessione non corrisponde a nessun utente nel DB. Contatta un amministratore.";
                 return RedirectToAction("Login", "Account");
             }
 
@@ -68,7 +69,7 @@ namespace UniBiblio.Controllers
             var libro = await _context.Libris.FirstOrDefaultAsync(l => (int)l.IdLibro == id_libro);
             if (libro == null || libro.QuantitaDisponibile <= 0)
             {
-                ModelState.AddModelError(string.Empty, "Il libro selezionato non è disponibile.");
+                TempData["ErrorMessage"] = "Il libro selezionato non è disponibile.";
                 return RedirectToAction("PrenotaLibri", "UserDashboard");
             }
 
@@ -91,8 +92,10 @@ namespace UniBiblio.Controllers
             await _context.SaveChangesAsync();
 
             // Redirige a una pagina di conferma o alla lista delle prenotazioni
+            TempData["Message"] = "Prenotazione EFFETTUATA correttamente!";
             return RedirectToAction("PrenotaLibri", "UserDashboard");
 
         }
+
     }
 }

@@ -20,6 +20,11 @@
     <button type="submit" class="btn btn-primary">Login</button>
 </form>
 
+@if (TempData["Message"] != null)
+{
+    <p class="alert alert-danger">@TempData["Message"]</p>
+}
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
