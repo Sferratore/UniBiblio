@@ -1,0 +1,89 @@
+﻿@model PrenotazioniViewModel
+
+@{
+    ViewData["Title"] = "Le tue prenotazioni";
+    var userEmail = Context.Session.GetString("UserEmail");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Le tue prenotazioni, @userEmail</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Prenotazioni Libri</h2>
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Titolo</th>
+                            <th>Autore</th>
+                            <th>Anno Pubblicazione</th>
+                            <th>ISBN</th>
+                            <th>Biblioteca</th>
+                            <th>Data Prenotazione</th>
+                            <th>Data Ritiro</th>
+                            <th>Stato</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var libro in Model.PrenotazioniLibri)
+                        {
+                            <tr>
+                                <td>@libro.Titolo</td>
+                                <td>@libro.Autore</td>
+                                <td>@libro.AnnoPubblicazione</td>
+                                <td>@libro.Isbn</td>
+                                <td>@libro.Biblioteca</td>
+                                <td>@libro.DataPrenotazione.ToShortDateString()</td>
+                                <td>@libro.DataRitiro?.ToShortDateString()</td>
+                                <td>@libro.Stato</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-12 mt-5">
+                <h2>Prenotazioni Sale Studio</h2>
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Nome Sala</th>
+                            <th>Biblioteca</th>
+                            <th>Data Prenotazione</th>
+                            <th>Ora Inizio</th>
+                            <th>Ora Fine</th>
+                            <th>Stato</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var sala in Model.PrenotazioniSale)
+                        {
+                            <tr>
+                                <td>@sala.NomeSala</td>
+                                <td>@sala.Biblioteca</td>
+                                <td>@sala.DataPrenotazione.ToShortDateString()</td>
+                                <td>@sala.OraInizio.ToString()</td>
+                                <td>@sala.OraFine.ToString()</td>
+                                <td>@sala.Stato</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

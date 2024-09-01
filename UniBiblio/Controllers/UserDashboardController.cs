@@ -201,6 +201,38 @@ namespace UniBiblio.Controllers
             return RedirectToAction("Home", "UserDashboard");
 
         }
+
+        [HttpGet]
+        public IActionResult VisualizzaPrenotazioni()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return RedirectToAction("Login"); // Redirect to login if user is not logged in
+            }
+
+            var viewModel = new PrenotazioniCompleteViewModel
+            {
+                PrenotazioniLibri = GetPrenotazioniLibri(userEmail),
+                PrenotazioniSale = GetPrenotazioniSale(userEmail)
+            };
+
+            return View(viewModel);
+        }
+
+        private List<Prenotazionieffettuatelibriview> GetPrenotazioniLibri(string userEmail)
+        {
+            return _context.Prenotazionieffettuatelibriviews
+                .Where(p => p.EmailUtente == userEmail)
+                .ToList();
+        }
+
+        private List<Prenotazionieffettuatesaleview> GetPrenotazioniSale(string userEmail)
+        {
+            return _context.Prenotazionieffettuatesaleviews
+                .Where(p => p.EmailUtente == userEmail)
+                .ToList();
+        }
     }
 
 
