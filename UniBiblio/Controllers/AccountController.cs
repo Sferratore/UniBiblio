@@ -6,9 +6,9 @@ namespace UniBiblio.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly unibiblioContext _context;
+        private readonly UniBiblioContext _context;
 
-        public AccountController(unibiblioContext context)
+        public AccountController(UniBiblioContext context)
         {
             _context = context;
         }

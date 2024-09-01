@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace UniBiblio.Models
 {
-    public partial class unibiblioContext : DbContext
+    public partial class UniBiblioContext : DbContext
     {
-        public unibiblioContext()
+        public UniBiblioContext()
         {
         }
 
-        public unibiblioContext(DbContextOptions<unibiblioContext> options)
+        public UniBiblioContext(DbContextOptions<UniBiblioContext> options)
             : base(options)
         {
         }
@@ -24,6 +24,7 @@ namespace UniBiblio.Models
         public virtual DbSet<Prenotalibriview> Prenotalibriviews { get; set; } = null!;
         public virtual DbSet<PrenotazioniLibri> PrenotazioniLibris { get; set; } = null!;
         public virtual DbSet<PrenotazioniSale> PrenotazioniSales { get; set; } = null!;
+        public virtual DbSet<Prenotazionieffettuatelibriview> Prenotazionieffettuatelibriviews { get; set; } = null!;
         public virtual DbSet<Ruoli> Ruolis { get; set; } = null!;
         public virtual DbSet<SaleStudio> SaleStudios { get; set; } = null!;
         public virtual DbSet<Utenti> Utentis { get; set; } = null!;
@@ -33,7 +34,7 @@ namespace UniBiblio.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;database=unibiblio;user=root;password=DB09Gennaio", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.31-mysql"));
+                optionsBuilder.UseMySql("server=localhost;database=UniBiblio;user=root;password=DB09Gennaio", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.31-mysql"));
             }
         }
 
@@ -269,6 +270,39 @@ namespace UniBiblio.Models
                 entity.Property(e => e.Stato)
                     .HasMaxLength(50)
                     .HasColumnName("stato");
+            });
+
+            modelBuilder.Entity<Prenotazionieffettuatelibriview>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("prenotazionieffettuatelibriview");
+
+                entity.Property(e => e.DataPrenotazione).HasColumnName("data_prenotazione");
+
+                entity.Property(e => e.DataRitiro).HasColumnName("data_ritiro");
+
+                entity.Property(e => e.EmailUtente)
+                    .HasMaxLength(150)
+                    .HasColumnName("email_utente");
+
+                entity.Property(e => e.IdLibro).HasColumnName("id_libro");
+
+                entity.Property(e => e.IdPrenotazione).HasColumnName("id_prenotazione");
+
+                entity.Property(e => e.IdUtente).HasColumnName("id_utente");
+
+                entity.Property(e => e.Isbn)
+                    .HasMaxLength(13)
+                    .HasColumnName("isbn");
+
+                entity.Property(e => e.Stato)
+                    .HasMaxLength(50)
+                    .HasColumnName("stato");
+
+                entity.Property(e => e.TitoloLibro)
+                    .HasMaxLength(255)
+                    .HasColumnName("titolo_libro");
             });
 
             modelBuilder.Entity<Ruoli>(entity =>

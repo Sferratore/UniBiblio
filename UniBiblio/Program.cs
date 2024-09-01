@@ -23,8 +23,8 @@ builder.Services.AddSession(options =>
 // Add services to the container.
 builder.Services.AddRazorPages();
 // Aggiungi DBContext. Dependency Injection
-builder.Services.AddDbContext<unibiblioContext>(options =>
-    options.UseMySql("Server=localhost;Database=unibiblio;User=root;Password=DB09Gennaio;", new MySqlServerVersion(new Version(8, 0, 31))));
+builder.Services.AddDbContext<UniBiblioContext>(options =>
+    options.UseMySql("Server=localhost;Database=UniBiblio;User=root;Password=DB09Gennaio;", new MySqlServerVersion(new Version(8, 0, 31))));
 
 var app = builder.Build();
 

@@ -3,14 +3,16 @@ using System.Collections.Generic;
 
 namespace UniBiblio.Models
 {
-    public partial class PrenotazioniLibri
+    public partial class Prenotazionieffettuatelibriview
     {
         public ulong IdPrenotazione { get; set; }
         public int? IdUtente { get; set; }
         public int? IdLibro { get; set; }
+        public string EmailUtente { get; set; } = null!;
+        public string TitoloLibro { get; set; } = null!;
+        public string Isbn { get; set; } = null!;
         public DateOnly DataPrenotazione { get; set; }
         public DateOnly? DataRitiro { get; set; }
-        public DateOnly? DataRestituzione { get; set; }
         public string Stato { get; set; } = null!;
     }
 }

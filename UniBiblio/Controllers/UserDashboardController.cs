@@ -7,9 +7,9 @@ namespace UniBiblio.Controllers
     public class UserDashboardController : Controller
     {
 
-        private readonly unibiblioContext _context;
+        private readonly UniBiblioContext _context;
 
-        public UserDashboardController(unibiblioContext context)
+        public UserDashboardController(UniBiblioContext context)
         {
             _context = context;
         }
@@ -63,6 +63,16 @@ namespace UniBiblio.Controllers
             {
                 TempData["ErrorMessage"] = "L'utente in sessione non corrisponde a nessun utente nel DB. Contatta un amministratore.";
                 return RedirectToAction("Login", "Account");
+            }
+
+            // Controlla il numero di prenotazioni non ritirate
+            int prenotazioniNonRitirate = await _context.Prenotazionieffettuatelibriviews
+                .CountAsync(p => p.IdUtente == (int)utente.IdUtente && p.DataRitiro == null);
+
+            if (prenotazioniNonRitirate >= 3)
+            {
+                TempData["ErrorMessage"] = "Hai già 3 prenotazioni non ritirate. Non puoi effettuare ulteriori prenotazioni.";
+                return RedirectToAction("PrenotaLibri", "UserDashboard");
             }
 
             // Recupera il libro
