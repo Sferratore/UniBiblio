@@ -41,7 +41,7 @@
                     <td>@libro.Biblioteca</td>
                     <td>@libro.QuantitaDisponibile</td>
                     <td>
-                        <form asp-action="PrenotaLibri" method="POST">
+                        <form asp-action="PrenotaLibri" method="POST" onsubmit="return confirmPrenotazione()">
                             <input type="hidden" id="id_libro" name="id_libro" value="@libro.IdLibro" />
                             <button type="submit" class="btn btn-primary">Prenota</button>
                         </form>
@@ -54,4 +54,15 @@
 else
 {
     <p>Nessun libro disponibile al momento.</p>
+}
+
+
+
+
+@section Scripts {
+    <script>
+        function confirmPrenotazione() {
+            return confirm("Sei sicuro di voler prenotare questo libro?");
+        }
+    </script>
 }
