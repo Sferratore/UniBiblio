@@ -59,6 +59,7 @@ CREATE TABLE Prenotazioni_Sale (
     id_utente INT REFERENCES Utenti(id_utente),
     id_sala INT REFERENCES Sale_Studio(id_sala),
     data_prenotazione DATE NOT NULL,
+    giorno_prenotato DATE NOT NULL,
     ora_inizio TIME NOT NULL,
     ora_fine TIME NOT NULL,
     stato VARCHAR(50) NOT NULL 

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<UniBiblio.Models.Prenotasaleview>
+@{
+    Layout = "../Shared/_Layout";
+}
+
+<h2>Prenotazione Sala Studio</h2>
+
+@if (TempData["Message"] != null)
+{
+    <p class="alert alert-success">@TempData["Message"]</p>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <p class="alert alert-danger">@TempData["ErrorMessage"]</p>
+}
+
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome Sala</th>
+                <th>Biblioteca</th>
+                <th>Capienza</th>
+                <th>Indirizzo Biblioteca</th>
+                <th>Posti Disponibili</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sala in Model)
+            {
+                <tr>
+                    <td>@sala.NomeSala</td>
+                    <td>@sala.Biblioteca</td>
+                    <td>@sala.Capienza</td>
+                    <td>@sala.IndirizzoBiblioteca</td>
+                    <td>@sala.PostiDisponibili</td>
+                    <td>
+                        <form asp-action="PrenotaSale" method="POST" onsubmit="return confirmPrenotazione()">
+                            <input type="hidden" name="id_sala" value="@sala.IdSala" />
+                            <button type="submit" class="btn btn-primary">Prenota</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nessuna sala disponibile al momento.</p>
+}
+
+@section Scripts {
+    <script>
+        function confirmPrenotazione() {
+            return confirm("Sei sicuro di voler prenotare questa sala?");
+        }
+    </script>
+}
