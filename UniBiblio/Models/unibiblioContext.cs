@@ -16,7 +16,6 @@ namespace UniBiblio.Models
         {
         }
 
-        public virtual DbSet<Amministratori> Amministratoris { get; set; } = null!;
         public virtual DbSet<Biblioteche> Biblioteches { get; set; } = null!;
         public virtual DbSet<Categorie> Categories { get; set; } = null!;
         public virtual DbSet<Libri> Libris { get; set; } = null!;
@@ -26,7 +25,6 @@ namespace UniBiblio.Models
         public virtual DbSet<PrenotazioniSale> PrenotazioniSales { get; set; } = null!;
         public virtual DbSet<Prenotazionieffettuatelibriview> Prenotazionieffettuatelibriviews { get; set; } = null!;
         public virtual DbSet<Prenotazionieffettuatesaleview> Prenotazionieffettuatesaleviews { get; set; } = null!;
-        public virtual DbSet<Ruoli> Ruolis { get; set; } = null!;
         public virtual DbSet<SaleStudio> SaleStudios { get; set; } = null!;
         public virtual DbSet<Utenti> Utentis { get; set; } = null!;
 
@@ -43,40 +41,6 @@ namespace UniBiblio.Models
         {
             modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
                 .HasCharSet("utf8mb4");
-
-            modelBuilder.Entity<Amministratori>(entity =>
-            {
-                entity.HasKey(e => e.IdAdmin)
-                    .HasName("PRIMARY");
-
-                entity.ToTable("amministratori");
-
-                entity.HasIndex(e => e.Email, "email")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.IdAdmin, "id_admin")
-                    .IsUnique();
-
-                entity.Property(e => e.IdAdmin).HasColumnName("id_admin");
-
-                entity.Property(e => e.Cognome)
-                    .HasMaxLength(100)
-                    .HasColumnName("cognome");
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(150)
-                    .HasColumnName("email");
-
-                entity.Property(e => e.IdBiblioteca).HasColumnName("id_biblioteca");
-
-                entity.Property(e => e.Nome)
-                    .HasMaxLength(100)
-                    .HasColumnName("nome");
-
-                entity.Property(e => e.PasswordHash)
-                    .HasMaxLength(255)
-                    .HasColumnName("password_hash");
-            });
 
             modelBuilder.Entity<Biblioteche>(entity =>
             {
@@ -349,26 +313,6 @@ namespace UniBiblio.Models
                 entity.Property(e => e.Stato)
                     .HasMaxLength(50)
                     .HasColumnName("stato");
-            });
-
-            modelBuilder.Entity<Ruoli>(entity =>
-            {
-                entity.HasKey(e => e.IdRuolo)
-                    .HasName("PRIMARY");
-
-                entity.ToTable("ruoli");
-
-                entity.HasIndex(e => e.IdRuolo, "id_ruolo")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.NomeRuolo, "nome_ruolo")
-                    .IsUnique();
-
-                entity.Property(e => e.IdRuolo).HasColumnName("id_ruolo");
-
-                entity.Property(e => e.NomeRuolo)
-                    .HasMaxLength(50)
-                    .HasColumnName("nome_ruolo");
             });
 
             modelBuilder.Entity<SaleStudio>(entity =>

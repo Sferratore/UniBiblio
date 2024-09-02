@@ -8,15 +8,6 @@ CREATE TABLE Utenti (
     id_ruolo INT REFERENCES Ruoli(id_ruolo)
 );
 
-CREATE TABLE Amministratori (
-    id_admin SERIAL PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    cognome VARCHAR(100) NOT NULL,
-    email VARCHAR(150) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    id_biblioteca INT REFERENCES Biblioteche(id_biblioteca)
-);
-
 CREATE TABLE Biblioteche (
     id_biblioteca SERIAL PRIMARY KEY,
     nome_biblioteca VARCHAR(100) NOT NULL,
@@ -76,7 +67,3 @@ CREATE TABLE Libri_Categorie (
     PRIMARY KEY (id_libro, id_categoria)
 );
 
-CREATE TABLE Ruoli (
-    id_ruolo SERIAL PRIMARY KEY,
-    nome_ruolo VARCHAR(50) UNIQUE NOT NULL
-);

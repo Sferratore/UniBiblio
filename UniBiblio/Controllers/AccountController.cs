@@ -38,24 +38,6 @@ namespace UniBiblio.Controllers
                 HttpContext.Session.SetString("UserEmail", utente.Email);
                 return RedirectToAction("Home", "UserDashboard");
             }
-            else
-            {
-                if (utente == null)
-                {
-                    // Se non è un utente, controlla se è un amministratore
-                    var amministratore = await _context.Amministratoris
-                        .FirstOrDefaultAsync(a => a.Email == model.Email);
-
-                    if (amministratore != null && BCrypt.Net.BCrypt.Verify(model.Password, amministratore.PasswordHash))
-                    {
-                        // Logica per l'amministratore loggato
-                        HttpContext.Session.SetString("UserEmail", amministratore.Email);
-                        return RedirectToAction("AdminDashboard", "Home");
-                    }
-
-
-                }
-            }
 
             //Logica per i login falliti
             ModelState.AddModelError(string.Empty, "Credenziali non valide.");
