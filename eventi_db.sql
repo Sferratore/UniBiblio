@@ -1,8 +1,8 @@
 SHOW VARIABLES LIKE 'event_scheduler';
 SET GLOBAL event_scheduler = ON;
 SHOW EVENTS;
-
-DELIMITER //
+ 
+DELIMITER //  -- Vi è un curioso bug col delimiter, devi eseguirlo solo col delimiter superiore anche se va scritto con tutti e due.
 
 CREATE EVENT IF NOT EXISTS `AutoDeleteBookReservations`
 ON SCHEDULE EVERY 1 DAY STARTS CURRENT_TIMESTAMP
