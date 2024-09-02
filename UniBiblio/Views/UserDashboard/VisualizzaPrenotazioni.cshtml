@@ -1,4 +1,5 @@
 ﻿@model UniBiblio.Models.PrenotazioniCompleteViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Le tue prenotazioni";
     var userEmail = Context.Session.GetString("UserEmail");
@@ -29,6 +30,7 @@
                             <th>Data Prenotazione</th>
                             <th>Data Ritiro</th>
                             <th>Stato</th>
+                            <th>Azioni</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,6 +43,12 @@
                                 <td>@libro.DataPrenotazione.ToShortDateString()</td>
                                 <td>@libro.DataRitiro?.ToShortDateString()</td>
                                 <td>@libro.Stato</td>
+                                <td>
+                                    <form asp-action="CancellaPrenotazioneLibro" method="post">
+                                        <input type="hidden" name="idPrenotazione" value="@libro.IdPrenotazione" />
+                                        <button type="submit" class="btn btn-danger">Cancella</button>
+                                    </form>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -55,9 +63,11 @@
                             <th>Nome Sala</th>
                             <th>Biblioteca</th>
                             <th>Data Prenotazione</th>
+                            <th>Giorno Prenotato</th>
                             <th>Ora Inizio</th>
                             <th>Ora Fine</th>
                             <th>Stato</th>
+                            <th>Azioni</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,9 +77,16 @@
                                 <td>@sala.NomeSala</td>
                                 <td>@sala.Biblioteca</td>
                                 <td>@sala.DataPrenotazione.ToShortDateString()</td>
+                                <td>@sala.GiornoPrenotato.ToShortDateString()</td>
                                 <td>@sala.OraInizio.ToString()</td>
                                 <td>@sala.OraFine.ToString()</td>
                                 <td>@sala.Stato</td>
+                                <td>
+                                    <form asp-action="CancellaPrenotazioneSala" method="post">
+                                        <input type="hidden" name="idPrenotazione" value="@sala.IdPrenotazione" />
+                                        <button type="submit" class="btn btn-danger">Cancella</button>
+                                    </form>
+                                </td>
                             </tr>
                         }
                     </tbody>

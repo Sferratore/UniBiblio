@@ -220,6 +220,41 @@ namespace UniBiblio.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CancellaPrenotazioneLibro(int idPrenotazione)
+        {
+            var prenotazione = await _context.PrenotazioniLibris.FindAsync((ulong)idPrenotazione);
+            if (prenotazione != null)
+            {
+                _context.PrenotazioniLibris.Remove(prenotazione);
+                await _context.SaveChangesAsync();
+                TempData["Message"] = "Prenotazione del libro cancellata con successo.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Prenotazione non trovata.";
+            }
+            return RedirectToAction("Home", "UserDashboard");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CancellaPrenotazioneSala(int idPrenotazione)
+        {
+            var prenotazione = await _context.PrenotazioniSales.FindAsync((ulong)idPrenotazione);
+            if (prenotazione != null)
+            {
+                _context.PrenotazioniSales.Remove(prenotazione);
+                await _context.SaveChangesAsync();
+                TempData["Message"] = "Prenotazione della sala studio cancellata con successo.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Prenotazione non trovata.";
+            }
+            return RedirectToAction("Home", "UserDashboard");
+        }
+
 
 
 
