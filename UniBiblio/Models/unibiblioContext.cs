@@ -299,6 +299,10 @@ namespace UniBiblio.Models
                     .HasMaxLength(13)
                     .HasColumnName("isbn");
 
+                entity.Property(e => e.NomeBiblioteca)
+                    .HasMaxLength(100)
+                    .HasColumnName("nome_biblioteca");
+
                 entity.Property(e => e.Stato)
                     .HasMaxLength(50)
                     .HasColumnName("stato");

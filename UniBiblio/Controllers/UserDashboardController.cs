@@ -220,6 +220,11 @@ namespace UniBiblio.Controllers
             return View(viewModel);
         }
 
+
+
+
+        //METODI DI UTILITY
+
         private List<Prenotazionieffettuatelibriview> GetPrenotazioniLibri(string userEmail)
         {
             return _context.Prenotazionieffettuatelibriviews

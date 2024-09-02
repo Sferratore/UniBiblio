@@ -25,6 +25,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                        @if (Context.Session.GetString("UserEmail") != null)
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("VisualizzaPrenotazioni", "UserDashboard")" class="nav-link text-dark" style="cursor: pointer;">Visualizza le tue prenotazioni</a>
+                            </li>
+                        }
                     </ul>
                     @if (Context.Session.GetString("UserEmail") != null)
                     {

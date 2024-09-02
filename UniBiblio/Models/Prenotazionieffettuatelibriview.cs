@@ -11,6 +11,7 @@ namespace UniBiblio.Models
         public string EmailUtente { get; set; } = null!;
         public string TitoloLibro { get; set; } = null!;
         public string Isbn { get; set; } = null!;
+        public string NomeBiblioteca { get; set; } = null!;
         public DateOnly DataPrenotazione { get; set; }
         public DateOnly? DataRitiro { get; set; }
         public string Stato { get; set; } = null!;
