@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace UniBiblio.Models
 {
@@ -26,6 +23,7 @@ namespace UniBiblio.Models
         public virtual DbSet<Prenotazionieffettuatelibriview> Prenotazionieffettuatelibriviews { get; set; } = null!;
         public virtual DbSet<Prenotazionieffettuatesaleview> Prenotazionieffettuatesaleviews { get; set; } = null!;
         public virtual DbSet<SaleStudio> SaleStudios { get; set; } = null!;
+        public virtual DbSet<StatistichePrenotazioniMensili> StatistichePrenotazioniMensilis { get; set; } = null!;
         public virtual DbSet<Utenti> Utentis { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -340,6 +338,46 @@ namespace UniBiblio.Models
                     .HasColumnName("nome_sala");
             });
 
+            modelBuilder.Entity<StatistichePrenotazioniMensili>(entity =>
+            {
+                entity.HasKey(e => e.IdStatistica)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("statistiche_prenotazioni_mensili");
+
+                entity.HasIndex(e => e.IdStatistica, "id_statistica")
+                    .IsUnique();
+
+                entity.Property(e => e.IdStatistica).HasColumnName("id_statistica");
+
+                entity.Property(e => e.Anno).HasColumnName("anno");
+
+                entity.Property(e => e.CreatoIl)
+                    .HasColumnType("timestamp")
+                    .HasColumnName("creato_il")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.LibroPiuPrenotato)
+                    .HasMaxLength(255)
+                    .HasColumnName("libro_piu_prenotato");
+
+                entity.Property(e => e.Mese).HasColumnName("mese");
+
+                entity.Property(e => e.PrenotazioniLibriAttive).HasColumnName("prenotazioni_libri_attive");
+
+                entity.Property(e => e.PrenotazioniLibriCompletate).HasColumnName("prenotazioni_libri_completate");
+
+                entity.Property(e => e.PrenotazioniSaleConfermate).HasColumnName("prenotazioni_sale_confermate");
+
+                entity.Property(e => e.SalaPiuPrenotata)
+                    .HasMaxLength(255)
+                    .HasColumnName("sala_piu_prenotata");
+
+                entity.Property(e => e.TotalePrenotazioniLibri).HasColumnName("totale_prenotazioni_libri");
+
+                entity.Property(e => e.TotalePrenotazioniSale).HasColumnName("totale_prenotazioni_sale");
+            });
+
             modelBuilder.Entity<Utenti>(entity =>
             {
                 entity.HasKey(e => e.IdUtente)
@@ -363,7 +401,9 @@ namespace UniBiblio.Models
                     .HasMaxLength(150)
                     .HasColumnName("email");
 
-                entity.Property(e => e.IdRuolo).HasColumnName("id_ruolo");
+                entity.Property(e => e.IsAmministratore)
+                    .HasColumnName("is_amministratore")
+                    .HasDefaultValueSql("'0'");
 
                 entity.Property(e => e.Nome)
                     .HasMaxLength(100)

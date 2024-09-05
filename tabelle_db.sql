@@ -5,7 +5,7 @@ CREATE TABLE Utenti (
     email VARCHAR(150) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     telefono VARCHAR(15),
-    id_ruolo INT REFERENCES Ruoli(id_ruolo)
+    is_amministratore BOOL
 );
 
 CREATE TABLE Biblioteche (

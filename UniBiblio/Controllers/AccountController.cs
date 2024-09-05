@@ -36,6 +36,11 @@ namespace UniBiblio.Controllers
             {
                 // Logica per l'utente loggato
                 HttpContext.Session.SetString("UserEmail", utente.Email);
+                HttpContext.Session.SetString("IsAdmin", utente.IsAmministratore == true ? "true" : "false");
+                if (HttpContext.Session.GetString("IsAdmin") == "true")
+                {
+                    return RedirectToAction("Index", "AdminDashboard");
+                }
                 return RedirectToAction("Home", "UserDashboard");
             }
 
