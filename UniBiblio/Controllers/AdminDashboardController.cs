@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using OfficeOpenXml;
 using UniBiblio.Models;
@@ -28,6 +29,9 @@ namespace UniBiblio.Controllers
 
             try
             {
+                // Imposta il contesto di licenza EPPlus
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
                 //Qui usiamo Dapper perché EFC non ci permette di ottenere risultati dal DB se non si tratta di tabelle o view che comunicano col dbcontext
                 using (var connection = new MySqlConnection(_connectionString))
                 {
@@ -36,10 +40,7 @@ namespace UniBiblio.Controllers
                         "CALL InsertMonthlyStatistics()"
                     );
 
-                    // Recupera i dati dalla tabella Statistiche_Prenotazioni_Mensili
-                    var statistiche = await connection.QueryAsync<StatistichePrenotazioniMensili>(
-                        "SELECT * FROM Statistiche_Prenotazioni_Mensili"
-                    );
+                    var statistiche = await _context.StatistichePrenotazioniMensilis.ToListAsync();
 
                     // Utilizza un MemoryStream per creare il file Excel in memoria
                     using (var memoryStream = new MemoryStream())

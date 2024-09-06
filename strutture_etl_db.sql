@@ -71,6 +71,7 @@ DELIMITER //
 
 CREATE PROCEDURE InsertMonthlyStatistics()
 BEGIN
+	DELETE FROM Statistiche_Prenotazioni_Mensili;
     -- Inserisci le statistiche mensili combinate per libri e sale nella nuova tabella
     INSERT INTO Statistiche_Prenotazioni_Mensili (
         mese,
