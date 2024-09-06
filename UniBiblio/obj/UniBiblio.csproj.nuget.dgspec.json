@@ -49,6 +49,10 @@
               "target": "Package",
               "version": "[2.1.35, )"
             },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[7.3.1, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.33, )"
@@ -64,6 +68,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[6.0.33, )"
+            },
+            "OfficeOpenXml.Core.ExcelPackage": {
+              "target": "Package",
+              "version": "[1.0.0, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
