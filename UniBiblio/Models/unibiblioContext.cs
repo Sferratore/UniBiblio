@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace UniBiblio.Models
 {
@@ -200,7 +203,7 @@ namespace UniBiblio.Models
                 entity.Property(e => e.IdUtente).HasColumnName("id_utente");
 
                 entity.Property(e => e.Stato)
-                    .HasMaxLength(50)
+                    .HasColumnType("enum('Prenotato','Ritirato','Restituito','Cancellato')")
                     .HasColumnName("stato");
             });
 
@@ -233,7 +236,7 @@ namespace UniBiblio.Models
                     .HasColumnName("ora_inizio");
 
                 entity.Property(e => e.Stato)
-                    .HasMaxLength(50)
+                    .HasColumnType("enum('Prenotato','Usufruito','Cancellato')")
                     .HasColumnName("stato");
             });
 
@@ -266,7 +269,7 @@ namespace UniBiblio.Models
                     .HasColumnName("nome_biblioteca");
 
                 entity.Property(e => e.Stato)
-                    .HasMaxLength(50)
+                    .HasColumnType("enum('Prenotato','Ritirato','Restituito','Cancellato')")
                     .HasColumnName("stato");
 
                 entity.Property(e => e.TitoloLibro)
@@ -309,7 +312,7 @@ namespace UniBiblio.Models
                     .HasColumnName("ora_inizio");
 
                 entity.Property(e => e.Stato)
-                    .HasMaxLength(50)
+                    .HasColumnType("enum('Prenotato','Usufruito','Cancellato')")
                     .HasColumnName("stato");
             });
 
@@ -363,11 +366,19 @@ namespace UniBiblio.Models
 
                 entity.Property(e => e.Mese).HasColumnName("mese");
 
-                entity.Property(e => e.PrenotazioniLibriAttive).HasColumnName("prenotazioni_libri_attive");
+                entity.Property(e => e.PrenotazioniLibriCancellati).HasColumnName("prenotazioni_libri_cancellati");
 
-                entity.Property(e => e.PrenotazioniLibriCompletate).HasColumnName("prenotazioni_libri_completate");
+                entity.Property(e => e.PrenotazioniLibriPrenotati).HasColumnName("prenotazioni_libri_prenotati");
 
-                entity.Property(e => e.PrenotazioniSaleConfermate).HasColumnName("prenotazioni_sale_confermate");
+                entity.Property(e => e.PrenotazioniLibriRestituiti).HasColumnName("prenotazioni_libri_restituiti");
+
+                entity.Property(e => e.PrenotazioniLibriRitirati).HasColumnName("prenotazioni_libri_ritirati");
+
+                entity.Property(e => e.PrenotazioniSaleCancellate).HasColumnName("prenotazioni_sale_cancellate");
+
+                entity.Property(e => e.PrenotazioniSalePrenotate).HasColumnName("prenotazioni_sale_prenotate");
+
+                entity.Property(e => e.PrenotazioniSaleUsufruite).HasColumnName("prenotazioni_sale_usufruite");
 
                 entity.Property(e => e.SalaPiuPrenotata)
                     .HasMaxLength(255)
@@ -400,6 +411,8 @@ namespace UniBiblio.Models
                 entity.Property(e => e.Email)
                     .HasMaxLength(150)
                     .HasColumnName("email");
+
+                entity.Property(e => e.IdRuolo).HasColumnName("id_ruolo");
 
                 entity.Property(e => e.IsAmministratore)
                     .HasColumnName("is_amministratore")

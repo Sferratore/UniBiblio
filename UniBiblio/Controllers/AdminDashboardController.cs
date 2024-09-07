@@ -41,7 +41,7 @@ namespace UniBiblio.Controllers
                 // Imposta il contesto di licenza EPPlus
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-                //Qui usiamo Dapper perché EFC non ci permette di ottenere risultati dal DB se non si tratta di tabelle o view che comunicano col dbcontext
+                // Qui usiamo Dapper perché EFC non ci permette di ottenere risultati dal DB se non si tratta di tabelle o view che comunicano col dbcontext
                 using (var connection = new MySqlConnection(_connectionString))
                 {
                     connection.Open();
@@ -64,11 +64,15 @@ namespace UniBiblio.Controllers
                             worksheet.Cells[1, 2].Value = "Anno";
                             worksheet.Cells[1, 3].Value = "Totale Prenotazioni Libri";
                             worksheet.Cells[1, 4].Value = "Totale Prenotazioni Sale";
-                            worksheet.Cells[1, 5].Value = "Prenotazioni Libri Completate";
-                            worksheet.Cells[1, 6].Value = "Prenotazioni Libri Attive";
-                            worksheet.Cells[1, 7].Value = "Prenotazioni Sale Confermate";
-                            worksheet.Cells[1, 8].Value = "Libro Più Prenotato";
-                            worksheet.Cells[1, 9].Value = "Sala Più Prenotata";
+                            worksheet.Cells[1, 5].Value = "Prenotazioni Libri Prenotati";
+                            worksheet.Cells[1, 6].Value = "Prenotazioni Libri Ritirati";
+                            worksheet.Cells[1, 7].Value = "Prenotazioni Libri Restituiti";
+                            worksheet.Cells[1, 8].Value = "Prenotazioni Libri Cancellati";
+                            worksheet.Cells[1, 9].Value = "Prenotazioni Sale Prenotate";
+                            worksheet.Cells[1, 10].Value = "Prenotazioni Sale Usufruite";
+                            worksheet.Cells[1, 11].Value = "Prenotazioni Sale Cancellate";
+                            worksheet.Cells[1, 12].Value = "Libro Più Prenotato";
+                            worksheet.Cells[1, 13].Value = "Sala Più Prenotata";
 
                             // Aggiungi i dati delle statistiche
                             int row = 2; // La prima riga è per le intestazioni
@@ -78,17 +82,21 @@ namespace UniBiblio.Controllers
                                 worksheet.Cells[row, 2].Value = statistica.Anno;
                                 worksheet.Cells[row, 3].Value = statistica.TotalePrenotazioniLibri;
                                 worksheet.Cells[row, 4].Value = statistica.TotalePrenotazioniSale;
-                                worksheet.Cells[row, 5].Value = statistica.PrenotazioniLibriCompletate;
-                                worksheet.Cells[row, 6].Value = statistica.PrenotazioniLibriAttive;
-                                worksheet.Cells[row, 7].Value = statistica.PrenotazioniSaleConfermate;
-                                worksheet.Cells[row, 8].Value = statistica.LibroPiuPrenotato;
-                                worksheet.Cells[row, 9].Value = statistica.SalaPiuPrenotata;
+                                worksheet.Cells[row, 5].Value = statistica.PrenotazioniLibriPrenotati;
+                                worksheet.Cells[row, 6].Value = statistica.PrenotazioniLibriRitirati;
+                                worksheet.Cells[row, 7].Value = statistica.PrenotazioniLibriRestituiti;
+                                worksheet.Cells[row, 8].Value = statistica.PrenotazioniLibriCancellati;
+                                worksheet.Cells[row, 9].Value = statistica.PrenotazioniSalePrenotate;
+                                worksheet.Cells[row, 10].Value = statistica.PrenotazioniSaleUsufruite;
+                                worksheet.Cells[row, 11].Value = statistica.PrenotazioniSaleCancellate;
+                                worksheet.Cells[row, 12].Value = statistica.LibroPiuPrenotato;
+                                worksheet.Cells[row, 13].Value = statistica.SalaPiuPrenotata;
                                 row++;
                             }
 
                             // Formatta il foglio di lavoro (facoltativo)
                             worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
-                            worksheet.Cells[1, 1, 1, 9].Style.Font.Bold = true; // Rendi in grassetto l'intestazione
+                            worksheet.Cells[1, 1, 1, 13].Style.Font.Bold = true; // Rendi in grassetto l'intestazione
 
                             // Salva il pacchetto Excel nel memory stream
                             package.Save();

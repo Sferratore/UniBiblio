@@ -1,4 +1,7 @@
-﻿namespace UniBiblio.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace UniBiblio.Models
 {
     public partial class Utenti
     {
@@ -8,6 +11,7 @@
         public string Email { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
         public string? Telefono { get; set; }
+        public int? IdRuolo { get; set; }
         public bool? IsAmministratore { get; set; }
     }
 }
