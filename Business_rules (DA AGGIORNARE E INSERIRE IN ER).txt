@@ -1,0 +1,2 @@
+-Un utente non può avere più di 3 libri prenotati e non ritirati
+-Un utente non può effettuare più di una prenotazione sala alla volta.
