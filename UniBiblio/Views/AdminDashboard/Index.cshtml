@@ -1,7 +1,93 @@
-﻿@{
+﻿@model UniBiblio.Models.AdminDashboardViewModel
+@{
     Layout = "../Shared/_Layout";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <h2>Pannello Amministratore</h2>
-<a href="@Url.Action("Analytics", "AdminDashboard")" class="btn btn-primary btn-lg mx-2" role="button">Facciamo un paio di analitics daei</a>
+
+<div style="display: flex; justify-content: flex-end;">
+    <a href="@Url.Action("Analytics", "AdminDashboard")" class="btn btn-primary btn-lg" role="button">Ottieni Analytics Mensili</a>
+</div>
+
+<!-- Book Reservations Table -->
+<h3>Prenotazioni Libri</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id Prenotazione</th>
+            <th>Email Utente</th>
+            <th>Titolo Libro</th>
+            <th>ISBN</th>
+            <th>Biblioteca</th>
+            <th>Data Prenotazione</th>
+            <th>Data Ritiro</th>
+            <th>Stato</th>
+            <th>Azioni</th> <!-- Added for delete actions -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LibriReservations)
+        {
+            <tr>
+                <td>@item.IdPrenotazione</td>
+                <td>@item.EmailUtente</td>
+                <td>@item.TitoloLibro</td>
+                <td>@item.Isbn</td>
+                <td>@item.NomeBiblioteca</td>
+                <td>@item.DataPrenotazione.ToString("dd/MM/yyyy")</td>
+                <td>@item.DataRitiro?.ToString("dd/MM/yyyy")</td>
+                <td>@item.Stato</td>
+                <td>
+                    @using (Html.BeginForm("CancellaPrenotazioneLibro", "AdminDashboard", FormMethod.Post))
+                    {
+                        @Html.Hidden("idPrenotazione", item.IdPrenotazione)
+                        <button type="submit" class="btn btn-danger btn-sm">Cancella</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Room Reservations Table -->
+<h3>Prenotazioni Sale</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id Prenotazione</th>
+            <th>Email Utente</th>
+            <th>Nome Sala</th>
+            <th>Biblioteca</th>
+            <th>Data Prenotazione</th>
+            <th>Giorno Prenotato</th>
+            <th>Ora Inizio</th>
+            <th>Ora Fine</th>
+            <th>Stato</th>
+            <th>Azioni</th> <!-- Added for delete actions -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SaleReservations)
+        {
+            <tr>
+                <td>@item.IdPrenotazione</td>
+                <td>@item.EmailUtente</td>
+                <td>@item.NomeSala</td>
+                <td>@item.Biblioteca</td>
+                <td>@item.DataPrenotazione.ToString("dd/MM/yyyy")</td>
+                <td>@item.GiornoPrenotato.ToString("dd/MM/yyyy")</td>
+                <td>@item.OraInizio</td>
+                <td>@item.OraFine</td>
+                <td>@item.Stato</td>
+                <td>
+                    @using (Html.BeginForm("CancellaPrenotazioneSala", "AdminDashboard", FormMethod.Post))
+                    {
+                        @Html.Hidden("idPrenotazione", item.IdPrenotazione)
+                        <button type="submit" class="btn btn-danger btn-sm">Cancella</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

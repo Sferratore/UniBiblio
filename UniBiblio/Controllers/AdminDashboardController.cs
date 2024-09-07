@@ -20,7 +20,16 @@ namespace UniBiblio.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var libriReservations = _context.Prenotazionieffettuatelibriviews.ToList();
+            var saleReservations = _context.Prenotazionieffettuatesaleviews.ToList();
+
+            var model = new AdminDashboardViewModel
+            {
+                LibriReservations = libriReservations,
+                SaleReservations = saleReservations
+            };
+
+            return View(model);
         }
 
         [HttpGet]
@@ -98,5 +107,34 @@ namespace UniBiblio.Controllers
                 return StatusCode(500, "Errore durante la generazione del file Excel");
             }
         }
+
+        [HttpPost]
+        public IActionResult CancellaPrenotazioneLibro(int idPrenotazione)
+        {
+            var reservation = _context.PrenotazioniLibris.SingleOrDefault(r => (int)r.IdPrenotazione == idPrenotazione);
+
+            if (reservation != null)
+            {
+                _context.PrenotazioniLibris.Remove(reservation);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult CancellaPrenotazioneSala(int idPrenotazione)
+        {
+            var reservation = _context.PrenotazioniSales.SingleOrDefault(r => (int)r.IdPrenotazione == idPrenotazione);
+
+            if (reservation != null)
+            {
+                _context.PrenotazioniSales.Remove(reservation);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
     }
+
 }
