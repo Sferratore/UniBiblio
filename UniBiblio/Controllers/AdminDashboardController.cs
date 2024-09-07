@@ -115,8 +115,8 @@ namespace UniBiblio.Controllers
 
             if (reservation != null)
             {
-                _context.PrenotazioniLibris.Remove(reservation);
-                _context.SaveChanges();
+                reservation.Stato = "Cancellato";  // Set the status to "Cancellato"
+                _context.SaveChanges();  // Save the changes to the database
             }
 
             return RedirectToAction("Index");
@@ -129,7 +129,36 @@ namespace UniBiblio.Controllers
 
             if (reservation != null)
             {
-                _context.PrenotazioniSales.Remove(reservation);
+                reservation.Stato = "Cancellato";  // Set the status to "Cancellato"
+                _context.SaveChanges();  // Save the changes to the database
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult ConfermaRitiro(int idPrenotazione)
+        {
+            var reservation = _context.PrenotazioniLibris.SingleOrDefault(r => (int)r.IdPrenotazione == idPrenotazione);
+
+            if (reservation != null && reservation.Stato == "Prenotato")
+            {
+                reservation.DataRitiro = DateOnly.FromDateTime(DateTime.Now);  // Set the current date as the ritiro date
+                reservation.Stato = "Ritirato";  // Update the status to "Ritirato"
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult ConfermaRestituzione(int idPrenotazione)
+        {
+            var reservation = _context.PrenotazioniLibris.SingleOrDefault(r => (int)r.IdPrenotazione == idPrenotazione);
+
+            if (reservation != null && reservation.Stato == "Ritirato")
+            {
+                reservation.Stato = "Restituito";  // Update the status to "Restituito"
                 _context.SaveChanges();
             }
 

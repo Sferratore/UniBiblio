@@ -23,7 +23,7 @@
             <th>Data Prenotazione</th>
             <th>Data Ritiro</th>
             <th>Stato</th>
-            <th>Azioni</th> <!-- Added for delete actions -->
+            <th>Azioni</th> <!-- Added for delete actions and confirmation buttons -->
         </tr>
     </thead>
     <tbody>
@@ -43,6 +43,25 @@
                     {
                         @Html.Hidden("idPrenotazione", item.IdPrenotazione)
                         <button type="submit" class="btn btn-danger btn-sm">Cancella</button>
+                    }
+
+                    <!-- Conditionally render 'Conferma Ritiro' button -->
+                    @if (item.Stato == "Prenotato")
+                    {
+                        @using (Html.BeginForm("ConfermaRitiro", "AdminDashboard", FormMethod.Post))
+                        {
+                            @Html.Hidden("idPrenotazione", item.IdPrenotazione)
+                            <button type="submit" class="btn btn-success btn-sm mt-1">Conferma Ritiro</button>
+                        }
+                    }
+                    <!-- Conditionally render 'Conferma Restituzione' button -->
+                    @if (item.Stato == "Ritirato")
+                    {
+                        @using (Html.BeginForm("ConfermaRestituzione", "AdminDashboard", FormMethod.Post))
+                        {
+                            @Html.Hidden("idPrenotazione", item.IdPrenotazione)
+                            <button type="submit" class="btn btn-warning btn-sm mt-1">Conferma Restituzione</button>
+                        }
                     }
                 </td>
             </tr>

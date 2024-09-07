@@ -224,16 +224,18 @@ namespace UniBiblio.Controllers
         public async Task<IActionResult> CancellaPrenotazioneLibro(int idPrenotazione)
         {
             var prenotazione = await _context.PrenotazioniLibris.FindAsync((ulong)idPrenotazione);
+
             if (prenotazione != null)
             {
-                _context.PrenotazioniLibris.Remove(prenotazione);
-                await _context.SaveChangesAsync();
+                prenotazione.Stato = "Cancellato";  // Update the status to "Cancellato"
+                await _context.SaveChangesAsync();   // Save the changes to the database
                 TempData["Message"] = "Prenotazione del libro cancellata con successo.";
             }
             else
             {
                 TempData["ErrorMessage"] = "Prenotazione non trovata.";
             }
+
             return RedirectToAction("Home", "UserDashboard");
         }
 
@@ -242,19 +244,20 @@ namespace UniBiblio.Controllers
         public async Task<IActionResult> CancellaPrenotazioneSala(int idPrenotazione)
         {
             var prenotazione = await _context.PrenotazioniSales.FindAsync((ulong)idPrenotazione);
+
             if (prenotazione != null)
             {
-                _context.PrenotazioniSales.Remove(prenotazione);
-                await _context.SaveChangesAsync();
+                prenotazione.Stato = "Cancellato";  // Update the status to "Cancellato"
+                await _context.SaveChangesAsync();   // Save the changes to the database
                 TempData["Message"] = "Prenotazione della sala studio cancellata con successo.";
             }
             else
             {
                 TempData["ErrorMessage"] = "Prenotazione non trovata.";
             }
+
             return RedirectToAction("Home", "UserDashboard");
         }
-
 
 
 

@@ -35,6 +35,7 @@ CREATE TABLE Sale_Studio (
     disponibilita BOOLEAN DEFAULT TRUE 
 );
 
+-- Use ENUM type for stato in Prenotazioni_Libri
 CREATE TABLE Prenotazioni_Libri (
     id_prenotazione SERIAL PRIMARY KEY,
     id_utente INT REFERENCES Utenti(id_utente),
@@ -42,7 +43,7 @@ CREATE TABLE Prenotazioni_Libri (
     data_prenotazione DATE NOT NULL,
     data_ritiro DATE,
     data_restituzione DATE,
-    stato VARCHAR(50) NOT NULL 
+    stato ENUM('Prenotato', 'Ritirato', 'Restituito', 'Cancellato') NOT NULL
 );
 
 CREATE TABLE Prenotazioni_Sale (
@@ -53,7 +54,7 @@ CREATE TABLE Prenotazioni_Sale (
     giorno_prenotato DATE NOT NULL,
     ora_inizio TIME NOT NULL,
     ora_fine TIME NOT NULL,
-    stato VARCHAR(50) NOT NULL 
+    stato ENUM('Prenotato', 'Usufruito', 'Cancellato') NOT NULL
 );
 
 CREATE TABLE Categorie (
