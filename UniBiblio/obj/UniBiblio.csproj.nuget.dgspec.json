@@ -69,6 +69,14 @@
               "target": "Package",
               "version": "[6.0.33, )"
             },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.28.0, )"
+            },
+            "MongoDB.Driver.GridFS": {
+              "target": "Package",
+              "version": "[2.28.0, )"
+            },
             "OfficeOpenXml.Core.ExcelPackage": {
               "target": "Package",
               "version": "[1.0.0, )"

@@ -1,9 +1,13 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.GridFS;
 using MySqlConnector;
 using OfficeOpenXml;
 using UniBiblio.Models;
+
 
 namespace UniBiblio.Controllers
 {
@@ -75,7 +79,7 @@ namespace UniBiblio.Controllers
                             worksheet.Cells[1, 13].Value = "Sala Più Prenotata";
 
                             // Aggiungi i dati delle statistiche
-                            int row = 2; // La prima riga è per le intestazioni
+                            int row = 2;
                             foreach (var statistica in statistiche)
                             {
                                 worksheet.Cells[row, 1].Value = statistica.Mese;
@@ -96,13 +100,35 @@ namespace UniBiblio.Controllers
 
                             // Formatta il foglio di lavoro (facoltativo)
                             worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
-                            worksheet.Cells[1, 1, 1, 13].Style.Font.Bold = true; // Rendi in grassetto l'intestazione
+                            worksheet.Cells[1, 1, 1, 13].Style.Font.Bold = true;
 
                             // Salva il pacchetto Excel nel memory stream
                             package.Save();
                         }
 
-                        // Restituisce il file Excel come download
+                        // Riposiziona il memoryStream all'inizio
+                        memoryStream.Position = 0;
+
+                        // 1. Memorizza il file Excel in MongoDB
+                        var mongoClient = new MongoClient("mongodb://localhost:27017");
+                        var mongoDatabase = mongoClient.GetDatabase("UniBiblio");
+                        var gridFSBucket = new GridFSBucket(mongoDatabase);
+
+                        var fileId = await gridFSBucket.UploadFromStreamAsync(
+                            "StatistichePrenotazioniMensili.xlsx", memoryStream,
+                            new GridFSUploadOptions
+                            {
+                                Metadata = new BsonDocument
+                                {
+                            { "createdBy", "admin@unibiblio.com" },
+                            { "reportType", "MonthlyAnalytics" },
+                            { "createdAt", DateTime.UtcNow }
+                                }
+                            }
+                        );
+
+                        // 2. Restituisce il file Excel come download all'utente
+                        memoryStream.Position = 0;
                         var fileName = "StatistichePrenotazioniMensili.xlsx";
                         return File(memoryStream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
                     }

@@ -70,3 +70,17 @@ C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\runtimes\win\lib\net
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
 C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\AWSSDK.Core.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\AWSSDK.SecurityToken.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\DnsClient.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\MongoDB.Bson.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\MongoDB.Driver.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\MongoDB.Driver.Core.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\MongoDB.Driver.GridFS.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\MongoDB.Libmongocrypt.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\SharpCompress.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\Snappier.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\ZstdSharp.dll
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\runtimes\linux\native\libmongocrypt.so
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\F.P.S\Desktop\UniBiblio\UniBiblio\bin\Debug\net6.0\runtimes\win\native\mongocrypt.dll
