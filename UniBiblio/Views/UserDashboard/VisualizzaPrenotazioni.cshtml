@@ -1,6 +1,9 @@
 ﻿@model UniBiblio.Models.PrenotazioniCompleteViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
+    Layout = "../Shared/_Layout";
+}
+@{
     ViewData["Title"] = "Le tue prenotazioni";
     var userEmail = Context.Session.GetString("UserEmail");
 }
@@ -11,8 +14,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
 </head>
 <body>
     <div class="container mt-5">
@@ -44,7 +45,7 @@
                                 <td>@libro.DataRitiro?.ToShortDateString()</td>
                                 <td>@libro.Stato</td>
                                 <td>
-                                    <form asp-action="CancellaPrenotazioneLibro" method="post">
+                                    <form asp-action="CancellaPrenotazioneLibro" method="post" onsubmit="return confirm('Sei sicuro di voler cancellare questa prenotazione libro?');">
                                         <input type="hidden" name="idPrenotazione" value="@libro.IdPrenotazione" />
                                         <button type="submit" class="btn btn-danger">Cancella</button>
                                     </form>
@@ -82,7 +83,7 @@
                                 <td>@sala.OraFine.ToString()</td>
                                 <td>@sala.Stato</td>
                                 <td>
-                                    <form asp-action="CancellaPrenotazioneSala" method="post">
+                                    <form asp-action="CancellaPrenotazioneSala" method="post" onsubmit="return confirm('Sei sicuro di voler cancellare questa prenotazione sala?');">
                                         <input type="hidden" name="idPrenotazione" value="@sala.IdPrenotazione" />
                                         <button type="submit" class="btn btn-danger">Cancella</button>
                                     </form>

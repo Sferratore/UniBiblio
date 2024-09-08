@@ -42,7 +42,7 @@
                     @using (Html.BeginForm("CancellaPrenotazioneLibro", "AdminDashboard", FormMethod.Post))
                     {
                         @Html.Hidden("idPrenotazione", item.IdPrenotazione)
-                        <button type="submit" class="btn btn-danger btn-sm">Cancella</button>
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Sei sicuro di voler cancellare questa prenotazione?');">Cancella</button>
                     }
 
                     <!-- Conditionally render 'Conferma Ritiro' button -->
@@ -51,7 +51,7 @@
                         @using (Html.BeginForm("ConfermaRitiro", "AdminDashboard", FormMethod.Post))
                         {
                             @Html.Hidden("idPrenotazione", item.IdPrenotazione)
-                            <button type="submit" class="btn btn-success btn-sm mt-1">Conferma Ritiro</button>
+                            <button type="submit" class="btn btn-success btn-sm mt-1" onclick="return confirm('Sei sicuro di voler confermare il ritiro di questa prenotazione?');">Conferma Ritiro</button>
                         }
                     }
                     <!-- Conditionally render 'Conferma Restituzione' button -->
@@ -60,7 +60,7 @@
                         @using (Html.BeginForm("ConfermaRestituzione", "AdminDashboard", FormMethod.Post))
                         {
                             @Html.Hidden("idPrenotazione", item.IdPrenotazione)
-                            <button type="submit" class="btn btn-warning btn-sm mt-1">Conferma Restituzione</button>
+                            <button type="submit" class="btn btn-warning btn-sm mt-1" onclick="return confirm('Sei sicuro di voler confermare la restituzione di questa prenotazione?');">Conferma Restituzione</button>
                         }
                     }
                 </td>
@@ -103,7 +103,7 @@
                     @using (Html.BeginForm("CancellaPrenotazioneSala", "AdminDashboard", FormMethod.Post))
                     {
                         @Html.Hidden("idPrenotazione", item.IdPrenotazione)
-                        <button type="submit" class="btn btn-danger btn-sm">Cancella</button>
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Sei sicuro di voler cancellare questa prenotazione?');">Cancella</button>
                     }
                 </td>
             </tr>

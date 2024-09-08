@@ -12,20 +12,50 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">UniBiblio</a>
+                @if (Context.Session.GetString("UserEmail") != null && Context.Session.GetString("IsAdmin") == "true")
+                {
+                    <a href="@Url.Action("Index", "AdminDashboard")" class="navbar-brand" asp-area="">UniBiblio</a>
+                }
+                else if (Context.Session.GetString("UserEmail") != null && Context.Session.GetString("IsAdmin") == "false")
+                {
+                    <a href="@Url.Action("Home", "UserDashboard")" class="navbar-brand" asp-area="">UniBiblio</a>
+                }
+                else
+                {
+                    <a class="navbar-brand" asp-area="" asp-page="/Index">UniBiblio</a>
+                }
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        @if (Context.Session.GetString("UserEmail") != null)
+                    <!-- Sezione 1: Link per la gestione delle prenotazioni -->
+                    <ul class="navbar-nav me-auto">
+                        @if (Context.Session.GetString("UserEmail") != null && Context.Session.GetString("IsAdmin") == "false")
                         {
                             <li class="nav-item">
                                 <a href="@Url.Action("VisualizzaPrenotazioni", "UserDashboard")" class="nav-link text-dark" style="cursor: pointer;">Visualizza le tue prenotazioni</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Home", "UserDashboard")" class="nav-link text-dark" style="cursor: pointer;">Effettua una prenotazione</a>
+                            </li>
+                        }
+                        else if (Context.Session.GetString("UserEmail") != null && Context.Session.GetString("IsAdmin") == "true")
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "AdminDashboard")" class="nav-link text-dark" style="cursor: pointer;">Admin dashboard</a>
+                            </li>
                         }
                     </ul>
+
+                    <!-- Separatore -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <span class="navbar-text mx-3">|</span>
+                        </li>
+                    </ul>
+
+                    <!-- Sezione 2: Logout -->
                     @if (Context.Session.GetString("UserEmail") != null)
                     {
                         <ul class="navbar-nav">

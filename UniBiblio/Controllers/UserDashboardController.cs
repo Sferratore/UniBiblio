@@ -125,7 +125,7 @@ namespace UniBiblio.Controllers
                         new { Date = date }
                     );
 
-                    TempData["DatePick"] = date.ToString();
+                    TempData["DatePick"] = DateOnly.FromDateTime(date).ToString();
                     return View(sale);
                 }
 
