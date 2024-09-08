@@ -71,7 +71,7 @@ namespace UniBiblio.Controllers
 
             // Controlla il numero di prenotazioni non ritirate
             int prenotazioniNonRitirate = await _context.Prenotazionieffettuatelibriviews
-                .CountAsync(p => p.IdUtente == (int)utente.IdUtente && p.DataRitiro == null);
+                .CountAsync(p => p.IdUtente == utente.IdUtente && p.DataRitiro == null);
 
             if (prenotazioniNonRitirate >= 3)
             {
@@ -90,8 +90,8 @@ namespace UniBiblio.Controllers
             // Crea una nuova prenotazione
             var nuovaPrenotazione = new PrenotazioniLibri
             {
-                IdUtente = (int)utente.IdUtente,
-                IdLibro = (int)libro.IdLibro,
+                IdUtente = utente.IdUtente,
+                IdLibro = libro.IdLibro,
                 DataPrenotazione = DateOnly.FromDateTime(DateTime.Now),
                 Stato = "Prenotato"
             };
@@ -162,7 +162,7 @@ namespace UniBiblio.Controllers
 
             // Controlla il numero di prenotazioni non scadute
             int prenotazioniNonScadute = await _context.Prenotazionieffettuatesaleviews
-                .CountAsync(p => p.IdUtente == (int)utente.IdUtente && p.GiornoPrenotato >= DateOnly.FromDateTime(DateTime.Now));
+                .CountAsync(p => p.IdUtente == utente.IdUtente && p.GiornoPrenotato >= DateOnly.FromDateTime(DateTime.Now));
 
             if (prenotazioniNonScadute >= 1)
             {
@@ -181,8 +181,8 @@ namespace UniBiblio.Controllers
             // Crea una nuova prenotazione
             var nuovaPrenotazione = new PrenotazioniSale
             {
-                IdUtente = (int)utente.IdUtente,
-                IdSala = (int)sala.IdSala,
+                IdUtente = utente.IdUtente,
+                IdSala = sala.IdSala,
                 DataPrenotazione = DateOnly.FromDateTime(DateTime.Now),
                 GiornoPrenotato = DateOnly.FromDateTime(date_pick),
                 OraInizio = TimeOnly.Parse("7:00"),

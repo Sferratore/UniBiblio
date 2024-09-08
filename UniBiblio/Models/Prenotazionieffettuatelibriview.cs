@@ -6,8 +6,8 @@ namespace UniBiblio.Models
     public partial class Prenotazionieffettuatelibriview
     {
         public ulong IdPrenotazione { get; set; }
-        public int? IdUtente { get; set; }
-        public int? IdLibro { get; set; }
+        public ulong? IdUtente { get; set; }
+        public ulong? IdLibro { get; set; }
         public string EmailUtente { get; set; } = null!;
         public string TitoloLibro { get; set; } = null!;
         public string Isbn { get; set; } = null!;

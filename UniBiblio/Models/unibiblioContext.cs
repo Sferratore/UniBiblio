@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace UniBiblio.Models
 {
@@ -16,7 +19,6 @@ namespace UniBiblio.Models
         public virtual DbSet<Biblioteche> Biblioteches { get; set; } = null!;
         public virtual DbSet<Categorie> Categories { get; set; } = null!;
         public virtual DbSet<Libri> Libris { get; set; } = null!;
-        public virtual DbSet<LibriCategorie> LibriCategories { get; set; } = null!;
         public virtual DbSet<Prenotalibriview> Prenotalibriviews { get; set; } = null!;
         public virtual DbSet<PrenotazioniLibri> PrenotazioniLibris { get; set; } = null!;
         public virtual DbSet<PrenotazioniSale> PrenotazioniSales { get; set; } = null!;
@@ -47,9 +49,6 @@ namespace UniBiblio.Models
 
                 entity.ToTable("biblioteche");
 
-                entity.HasIndex(e => e.IdBiblioteca, "id_biblioteca")
-                    .IsUnique();
-
                 entity.Property(e => e.IdBiblioteca).HasColumnName("id_biblioteca");
 
                 entity.Property(e => e.Indirizzo)
@@ -76,9 +75,6 @@ namespace UniBiblio.Models
 
                 entity.ToTable("categorie");
 
-                entity.HasIndex(e => e.IdCategoria, "id_categoria")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.NomeCategoria, "nome_categoria")
                     .IsUnique();
 
@@ -96,8 +92,7 @@ namespace UniBiblio.Models
 
                 entity.ToTable("libri");
 
-                entity.HasIndex(e => e.IdLibro, "id_libro")
-                    .IsUnique();
+                entity.HasIndex(e => e.IdBiblioteca, "fk_libri_biblioteca");
 
                 entity.HasIndex(e => e.Isbn, "isbn")
                     .IsUnique();
@@ -127,19 +122,31 @@ namespace UniBiblio.Models
                 entity.Property(e => e.Titolo)
                     .HasMaxLength(255)
                     .HasColumnName("titolo");
-            });
 
-            modelBuilder.Entity<LibriCategorie>(entity =>
-            {
-                entity.HasKey(e => new { e.IdLibro, e.IdCategoria })
-                    .HasName("PRIMARY")
-                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+                entity.HasOne(d => d.IdBibliotecaNavigation)
+                    .WithMany(p => p.Libris)
+                    .HasForeignKey(d => d.IdBiblioteca)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("fk_libri_biblioteca");
 
-                entity.ToTable("libri_categorie");
+                entity.HasMany(d => d.IdCategoria)
+                    .WithMany(p => p.IdLibros)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "LibriCategorie",
+                        l => l.HasOne<Categorie>().WithMany().HasForeignKey("IdCategoria").HasConstraintName("fk_libri_categorie_categoria"),
+                        r => r.HasOne<Libri>().WithMany().HasForeignKey("IdLibro").HasConstraintName("fk_libri_categorie_libro"),
+                        j =>
+                        {
+                            j.HasKey("IdLibro", "IdCategoria").HasName("PRIMARY").HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
-                entity.Property(e => e.IdLibro).HasColumnName("id_libro");
+                            j.ToTable("libri_categorie");
 
-                entity.Property(e => e.IdCategoria).HasColumnName("id_categoria");
+                            j.HasIndex(new[] { "IdCategoria" }, "fk_libri_categorie_categoria");
+
+                            j.IndexerProperty<ulong>("IdLibro").HasColumnName("id_libro");
+
+                            j.IndexerProperty<ulong>("IdCategoria").HasColumnName("id_categoria");
+                        });
             });
 
             modelBuilder.Entity<Prenotalibriview>(entity =>
@@ -184,8 +191,9 @@ namespace UniBiblio.Models
 
                 entity.ToTable("prenotazioni_libri");
 
-                entity.HasIndex(e => e.IdPrenotazione, "id_prenotazione")
-                    .IsUnique();
+                entity.HasIndex(e => e.IdLibro, "fk_prenotazioni_libri_libro");
+
+                entity.HasIndex(e => e.IdUtente, "fk_prenotazioni_libri_utente");
 
                 entity.Property(e => e.IdPrenotazione).HasColumnName("id_prenotazione");
 
@@ -202,6 +210,18 @@ namespace UniBiblio.Models
                 entity.Property(e => e.Stato)
                     .HasColumnType("enum('Prenotato','Ritirato','Restituito','Cancellato')")
                     .HasColumnName("stato");
+
+                entity.HasOne(d => d.IdLibroNavigation)
+                    .WithMany(p => p.PrenotazioniLibris)
+                    .HasForeignKey(d => d.IdLibro)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("fk_prenotazioni_libri_libro");
+
+                entity.HasOne(d => d.IdUtenteNavigation)
+                    .WithMany(p => p.PrenotazioniLibris)
+                    .HasForeignKey(d => d.IdUtente)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("fk_prenotazioni_libri_utente");
             });
 
             modelBuilder.Entity<PrenotazioniSale>(entity =>
@@ -211,8 +231,9 @@ namespace UniBiblio.Models
 
                 entity.ToTable("prenotazioni_sale");
 
-                entity.HasIndex(e => e.IdPrenotazione, "id_prenotazione")
-                    .IsUnique();
+                entity.HasIndex(e => e.IdSala, "fk_prenotazioni_sale_sala");
+
+                entity.HasIndex(e => e.IdUtente, "fk_prenotazioni_sale_utente");
 
                 entity.Property(e => e.IdPrenotazione).HasColumnName("id_prenotazione");
 
@@ -235,6 +256,18 @@ namespace UniBiblio.Models
                 entity.Property(e => e.Stato)
                     .HasColumnType("enum('Prenotato','Usufruito','Cancellato')")
                     .HasColumnName("stato");
+
+                entity.HasOne(d => d.IdSalaNavigation)
+                    .WithMany(p => p.PrenotazioniSales)
+                    .HasForeignKey(d => d.IdSala)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("fk_prenotazioni_sale_sala");
+
+                entity.HasOne(d => d.IdUtenteNavigation)
+                    .WithMany(p => p.PrenotazioniSales)
+                    .HasForeignKey(d => d.IdUtente)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("fk_prenotazioni_sale_utente");
             });
 
             modelBuilder.Entity<Prenotazionieffettuatelibriview>(entity =>
@@ -320,8 +353,7 @@ namespace UniBiblio.Models
 
                 entity.ToTable("sale_studio");
 
-                entity.HasIndex(e => e.IdSala, "id_sala")
-                    .IsUnique();
+                entity.HasIndex(e => e.IdBiblioteca, "fk_sala_biblioteca");
 
                 entity.Property(e => e.IdSala).HasColumnName("id_sala");
 
@@ -336,6 +368,12 @@ namespace UniBiblio.Models
                 entity.Property(e => e.NomeSala)
                     .HasMaxLength(100)
                     .HasColumnName("nome_sala");
+
+                entity.HasOne(d => d.IdBibliotecaNavigation)
+                    .WithMany(p => p.SaleStudios)
+                    .HasForeignKey(d => d.IdBiblioteca)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("fk_sala_biblioteca");
             });
 
             modelBuilder.Entity<StatistichePrenotazioniMensili>(entity =>
@@ -396,9 +434,6 @@ namespace UniBiblio.Models
                 entity.HasIndex(e => e.Email, "email")
                     .IsUnique();
 
-                entity.HasIndex(e => e.IdUtente, "id_utente")
-                    .IsUnique();
-
                 entity.Property(e => e.IdUtente).HasColumnName("id_utente");
 
                 entity.Property(e => e.Cognome)
@@ -409,9 +444,7 @@ namespace UniBiblio.Models
                     .HasMaxLength(150)
                     .HasColumnName("email");
 
-                entity.Property(e => e.IsAmministratore)
-                    .HasColumnName("is_amministratore")
-                    .HasDefaultValueSql("'0'");
+                entity.Property(e => e.IsAmministratore).HasColumnName("is_amministratore");
 
                 entity.Property(e => e.Nome)
                     .HasMaxLength(100)
