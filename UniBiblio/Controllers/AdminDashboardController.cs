@@ -15,11 +15,13 @@ namespace UniBiblio.Controllers
     {
         private readonly UniBiblioContext _context;
         private readonly string _connectionString;
+        private readonly string _mongoConnectionString;
 
         public AdminDashboardController(UniBiblioContext context, IConfiguration configuration)
         {
             _context = context;
             _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _mongoConnectionString = configuration.GetConnectionString("MongoDbConnection");
         }
 
         public IActionResult Index()
@@ -110,7 +112,7 @@ namespace UniBiblio.Controllers
                         memoryStream.Position = 0;
 
                         // 1. Memorizza il file Excel in MongoDB
-                        var mongoClient = new MongoClient("mongodb://localhost:27017");
+                        var mongoClient = new MongoClient(_mongoConnectionString);
                         var mongoDatabase = mongoClient.GetDatabase("UniBiblio");
                         var gridFSBucket = new GridFSBucket(mongoDatabase);
 
