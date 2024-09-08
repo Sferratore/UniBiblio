@@ -4,6 +4,17 @@
 }
 
 <h2>Registrazione</h2>
+
+@if (TempData["Message"] != null)
+{
+    <p class="alert alert-success">@TempData["Message"]</p>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <p class="alert alert-danger">@TempData["ErrorMessage"]</p>
+}
+
 <form asp-action="Register" method="POST">
     <div class="form-group">
         <label asp-for="Nome"></label>

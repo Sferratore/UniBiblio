@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace UniBiblio.Models
 {
@@ -411,8 +408,6 @@ namespace UniBiblio.Models
                 entity.Property(e => e.Email)
                     .HasMaxLength(150)
                     .HasColumnName("email");
-
-                entity.Property(e => e.IdRuolo).HasColumnName("id_ruolo");
 
                 entity.Property(e => e.IsAmministratore)
                     .HasColumnName("is_amministratore")

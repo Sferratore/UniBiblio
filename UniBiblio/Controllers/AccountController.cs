@@ -45,7 +45,7 @@ namespace UniBiblio.Controllers
             }
 
             //Logica per i login falliti
-            ModelState.AddModelError(string.Empty, "Credenziali non valide.");
+            TempData["ErrorMessage"] = "Credenziali non valide.";
             return View(model);
 
         }
@@ -70,7 +70,7 @@ namespace UniBiblio.Controllers
             var existingUser = await _context.Utentis.AnyAsync(u => u.Email == model.Email);
             if (existingUser)
             {
-                ModelState.AddModelError(string.Empty, "Un utente con questa email è già registrato.");
+                TempData["ErrorMessage"] = "Un utente con questa mail è già registrato.";
                 return View(model);
             }
 
@@ -86,6 +86,8 @@ namespace UniBiblio.Controllers
             _context.Utentis.Add(nuovoUtente);
             await _context.SaveChangesAsync();
 
+
+            TempData["Message"] = "Registrazione avvenuta con successo!";
             return RedirectToAction("Login", "Account");
         }
     }

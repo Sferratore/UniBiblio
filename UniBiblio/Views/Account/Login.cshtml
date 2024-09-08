@@ -20,9 +20,15 @@
     <button type="submit" class="btn btn-primary">Login</button>
 </form>
 
+<br />
 @if (TempData["Message"] != null)
 {
-    <p class="alert alert-danger">@TempData["Message"]</p>
+    <p class="alert alert-success">@TempData["Message"]</p>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <p class="alert alert-danger">@TempData["ErrorMessage"]</p>
 }
 
 @section Scripts {
