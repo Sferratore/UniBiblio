@@ -10,7 +10,7 @@
     <a href="@Url.Action("Analytics", "AdminDashboard")" class="btn btn-primary btn-lg" role="button">Ottieni Analytics Mensili</a>
 </div>
 
-<!-- Book Reservations Table -->
+
 <h3>Prenotazioni Libri</h3>
 <table class="table table-striped">
     <thead>
@@ -23,7 +23,7 @@
             <th>Data Prenotazione</th>
             <th>Data Ritiro</th>
             <th>Stato</th>
-            <th>Azioni</th> <!-- Added for delete actions and confirmation buttons -->
+            <th>Azioni</th>
         </tr>
     </thead>
     <tbody>
@@ -44,8 +44,7 @@
                         @Html.Hidden("idPrenotazione", item.IdPrenotazione)
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Sei sicuro di voler cancellare questa prenotazione?');">Cancella</button>
                     }
-
-                    <!-- Conditionally render 'Conferma Ritiro' button -->
+                  
                     @if (item.Stato == "Prenotato")
                     {
                         @using (Html.BeginForm("ConfermaRitiro", "AdminDashboard", FormMethod.Post))
@@ -54,7 +53,7 @@
                             <button type="submit" class="btn btn-success btn-sm mt-1" onclick="return confirm('Sei sicuro di voler confermare il ritiro di questa prenotazione?');">Conferma Ritiro</button>
                         }
                     }
-                    <!-- Conditionally render 'Conferma Restituzione' button -->
+                    
                     @if (item.Stato == "Ritirato")
                     {
                         @using (Html.BeginForm("ConfermaRestituzione", "AdminDashboard", FormMethod.Post))
@@ -69,7 +68,7 @@
     </tbody>
 </table>
 
-<!-- Room Reservations Table -->
+
 <h3>Prenotazioni Sale</h3>
 <table class="table table-striped">
     <thead>
@@ -83,7 +82,7 @@
             <th>Ora Inizio</th>
             <th>Ora Fine</th>
             <th>Stato</th>
-            <th>Azioni</th> <!-- Added for delete actions -->
+            <th>Azioni</th> 
         </tr>
     </thead>
     <tbody>
