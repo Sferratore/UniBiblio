@@ -6,6 +6,14 @@
     Questo file SQL definisce la struttura di un database per un sistema di gestione bibliotecario.
     Il sistema permette la gestione delle prenotazioni di libri e sale studio, la gestione degli utenti, 
     e il tracciamento delle categorie di libri. 
+    
+	############################################################
+    #                       Business Rules                     #
+    ############################################################
+    
+    - Un utente può prenotare un massimo di 3 libri che non sono ancora stati ritirati.
+    - Un utente può effettuare una sola prenotazione di una sala studio alla volta.
+
 */
 
 -- Tabella utenti per memorizzare le informazioni sugli utenti della biblioteca

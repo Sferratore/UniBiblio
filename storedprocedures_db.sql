@@ -1,5 +1,5 @@
 DELIMITER //
-
+-- La procedura restituisce record riguardanti le sale disponibili con un numero di posti disponibili calcolato in base a seconda delle prenotazioni già esistenti.
 CREATE PROCEDURE GetAvailableSeatsByDate(IN ReservationDate DATE)
 BEGIN
     -- Seleziona le sale studio disponibili in base alla data di prenotazione fornita

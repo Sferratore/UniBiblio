@@ -24,12 +24,6 @@
     3. **Load (Caricamento)**:
         - Le statistiche vengono caricate nella tabella 'Statistiche_Prenotazioni_Mensili' per permettere stampa e download dell'excel.
     
-    ############################################################
-    #                       Business Rules                     #
-    ############################################################
-    
-    - Un utente può prenotare un massimo di 3 libri che non sono ancora stati ritirati.
-    - Un utente può effettuare una sola prenotazione di una sala studio alla volta.
 
     ############################################################
     #                 Dettagli della procedura SQL              #
