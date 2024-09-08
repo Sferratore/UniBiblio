@@ -18,7 +18,7 @@ UniBiblio is a web-based library management system that allows users to manage b
 git clone https://github.com/yourusername/UniBiblio.git
 cd UniBiblio
 `
-### 2. Configure the Database
+### 2. Configure the MySQL Database
 Create a MySQL database for the project, and run the SQL scripts provided in the UniBiblio folder:
 
 tabelle_db.sql: Contains the table structure.
@@ -52,7 +52,11 @@ You can use DB scaffholding to ensure coherence between the code and the DB stru
 dotnet ef dbcontext scaffold "Server=localhost;Database=unibiblio;User=root;Password=yourpassword;" Pomelo.EntityFrameworkCore.MySql -o Models
 `
 
-### 5. Build and Run the Application
+### 5. Create MongoDB Database
+Create a MongoDB Database Collection named "UniBiblio". Make sure to configure appsettings with the connection string properly.
+You can install MongoDB at https://www.mongodb.com/try/download/community .
+
+### 6. Build and Run the Application
 To run the application, use the following commands:
 
 `
@@ -60,10 +64,10 @@ dotnet build
 dotnet run
 `
 
-### 6. Access the Application
+### 7. Access the Application
 Once the project is running, access the application at https://localhost:5001.
 
-### 7. Seed the Database (Optional)
+### 8. Seed the Database (Optional)
 You can modify the Program.cs file to add initial seed data for users, books, and rooms. This is useful for testing and initial setup.
 
 ## Database Structure
